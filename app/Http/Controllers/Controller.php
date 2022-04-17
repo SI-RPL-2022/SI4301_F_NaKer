@@ -23,4 +23,8 @@ class Controller extends BaseController
         $pekerjaan = Pekerjaan::all(); 
         return view('dashboard', compact('pekerjaan'));
     }
+    public function profile()
+    {
+        return view('profile');
+    }
 }
