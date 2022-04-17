@@ -1,0 +1,33 @@
+#atas{
+    z-index: -1;
+}
+
+.beranda{
+    width: 100%;
+    height: 20vh;
+}
+
+#edit{
+    background-color: #588157; 
+    width: 6rem; 
+    color: white;
+}
+
+.nama{
+    font-size: large;
+    margin-top: 5%;
+}
+
+.pp{
+    width: 10rem;
+    height: 10rem;
+    border-radius: 5%;
+}
+
+.form{
+    color: white;
+    border-radius: 5%;
+    width: 25rem;
+    background-color: #344E41;
+    padding: 1rem;
+}
