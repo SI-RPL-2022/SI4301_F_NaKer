@@ -22,3 +22,4 @@ Route::get('/dashboard', [Controller::class, 'dashboard'])->name('dashboard');
 Route::get('/profile', [Controller::class, 'profile'])->name('profile');
 Route::get('/registrasi', [Controller::class, 'registrasi'])->name('registrasi');
 Route::get('/login', [Controller::class, 'login'])->name('login');
+Route::get('/edit-profile', [Controller::class, 'edit_profile'])->name('edit_profile');

@@ -56,7 +56,7 @@
             <div class="container" style="text-align: center; background-color: #344E41; width: 200px; height: 50px;border-radius: 5%;">
                 <button type="submit" class="btn" style="color:white;font-size:25px">Register</button>
             </div>
-            <div lass="container" style="text-align: center; padding-top: 2%;">
+            <div class="container" style="text-align: center; padding-top: 2%;">
                 <p>Already have an account? <a href="login" style="color:black">Log In</a>.</p>
             </div>
         </form>

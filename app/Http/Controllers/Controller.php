@@ -27,6 +27,10 @@ class Controller extends BaseController
     {
         return view('profile');
     }
+    public function edit_profile()
+    {
+        return view('edit_profile');
+    }
     public function registrasi()
     {
         return view('registrasi');

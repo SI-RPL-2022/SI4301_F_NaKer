@@ -1,5 +1,25 @@
 @extends('app')
 @section('content')
+<style>
+    .form-group {
+        position: relative;
+    }
+
+    .form-group .form-control-icon {
+        position: absolute;
+        z-index: 2;
+        display: block;
+        width: 2.375rem;
+        height: 2.375rem;
+        line-height: 2.375rem;
+        text-align: center;
+        pointer-events: none;
+        color: black;
+        right: 0;
+        top: 0px;
+    }
+</style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-inner">
         <div class="carousel-item active">
@@ -33,11 +53,18 @@
                 <!-- <div class="card-footer">
                     <a href="edit-profile"><button class="button">Edit</button></a>
                 </div> -->
-                <div class="container" style="text-align: center; background-color: #588157; width: 150px; height: 50px;border-radius: 5%;">
-                    <a href="edit-profile">
-                        <button type="submit" class="btn" style="color:white;font-size:25px">Edit</button>
+                <div class="container" style="text-align: center; background-color: #CCCCCC; width: 150px; height: 50px;border-radius: 5%;">
+                    <a href="">
+                        <button type="submit" class="btn" style="color:white;font-size:25px">Cancel</button>
                     </a>
                 </div>
+                <br>
+                <div class="container" style="text-align: center; background-color: #588157; width: 150px; height: 50px;border-radius: 5%;">
+                    <a href="profile">
+                        <button type="submit" class="btn" style="color:white;font-size:25px">Save</button>
+                    </a>
+                </div>
+                <br>
             </div>
         </div>
         <div class="col">
@@ -46,19 +73,31 @@
                     <form class="row g-3">
                         <div class="col-12">
                             <label for="DateOfBirth" class="form-label">Date Of Birth</label>
-                            <input type="email" class="form-control" id="DateOfBirth">
+                            <div class="form-group">
+                                <span class="fa fa-pencil form-control-icon"></span>
+                                <input type="email" class="form-control" id="DateOfBirth">
+                            </div>
                         </div>
                         <div class="col-12">
                             <label for="inputAddress" class="form-label">Address</label>
-                            <input type="text" class="form-control" id="inputAddress">
+                            <div class="form-group">
+                                <span class="fa fa-pencil form-control-icon"></span>
+                                <input type="text" class="form-control" id="inputAddress">
+                            </div>
                         </div>
                         <div class="col-12">
                             <label for="inputEmail" class="form-label">Email</label>
-                            <input type="text" class="form-control" id="inputEmail">
+                            <div class="form-group">
+                                <span class="fa fa-pencil form-control-icon"></span>
+                                <input type="text" class="form-control" id="inputEmail">
+                            </div>
                         </div>
                         <div class="col-md-12">
                             <label for="inputLinkedin" class="form-label">Linkedin Name</label>
-                            <input type="text" class="form-control" id="inputLinkedin">
+                            <div class="form-group">
+                                <span class="fa fa-pencil form-control-icon"></span>
+                                <input type="text" class="form-control" id="inputLinkedin">
+                            </div>
                         </div>
                         <div class="col-md-12">
                             <label for="inputCV" class="form-label">Curriculum Vitae</label>
@@ -73,11 +112,17 @@
                 <div class="card-body" style="background-color: #344E41; color: white; border-radius: 5%;">
                     <div class="mb-3">
                         <label for="Experience" class="form-label">Experience</label>
-                        <textarea class="form-control" id="Experience" rows="6"></textarea>
+                        <div class="form-group">
+                            <span class="fa fa-pencil form-control-icon"></span>  
+                            <textarea class="form-control" id="Experience" rows="6"></textarea>
+                        </div>
                     </div>
                     <div class="mb-3">
                         <label for="Certification" class="form-label">Certification</label>
-                        <textarea class="form-control" id="Certification" rows="6"></textarea>
+                        <div class="form-group">
+                            <span class="fa fa-pencil form-control-icon"></span>  
+                            <textarea class="form-control" id="Certification" rows="6"></textarea>
+                        </div>
                     </div>
                 </div>
             </div>
