@@ -18,6 +18,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::get('/cari-kerja', [Controller::class, 'cari_kerja'])->name('cari_kerja');
+Route::get('/cari-kerja/cari', [Controller::class, 'hasil_cari_kerja'])->name('hasil_cari_kerja');
 Route::get('/dashboard', [Controller::class, 'dashboard'])->name('dashboard');
 Route::get('/profile', [Controller::class, 'profile'])->name('profile');
 Route::get('/registrasi', [Controller::class, 'registrasi'])->name('registrasi');
