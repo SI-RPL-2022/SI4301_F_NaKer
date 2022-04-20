@@ -35,7 +35,7 @@
                 </div> -->
                 <div class="container" style="text-align: center; background-color: #588157; width: 150px; height: 50px;border-radius: 5%;">
                     <a href="edit-profile">
-                        <button type="submit" class="btn" style="color:white;font-size:25px">Edit</button>
+                        <a href="/edit-profile" class="btn" style="color:white;font-size:25px">Edit</a>
                     </a>
                 </div>
             </div>

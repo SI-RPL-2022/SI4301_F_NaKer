@@ -19,19 +19,21 @@
     <!-- navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #3A5A40;">
         <div class="container">
-          <a class="navbar-brand" href="#">NaKer</a>
+          <a class="navbar-brand" href="/dashboard">NaKer</a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                <div class="navbar-nav">
-                    <a class="nav-link" href="#">Video Training</a>
+                <div class="navbar-nav"> 
+                    <a class="nav-link disabled" href="#">Video Training</a>
                 </div>
                 <div class="navbar-nav ms-auto mb-2 mb-lg-0">
-                    <a class="nav-link me-3" href="#">Pekerjaan</a>
-                    <a class="nav-link me-3" href="#">Status Seleksi</a>
-                    <a class="nav-link me-3" href="#">Pembayaran</a>
-                    <a class="nav-link" href="#">Faizal Eric <i class="fa-solid fa-user"></i></a>
+                    <a class="nav-link me-3" href="/cari-kerja">Pekerjaan</a>
+                    <a class="nav-link me-3 disabled" href="#">Status Seleksi</a>
+                    <a class="nav-link me-3 disabled" href="#">Pembayaran</a>
+                    <a class="nav-link me-3" href="/login">Login</a>
+                    <a class="nav-link me-3" href="/registrasi">Register</a>
+                    <a class="nav-link" href="/profile">Faizal Eric <i class="fa-solid fa-user"></i></a>
                 </div>
             
           </div>
