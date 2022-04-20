@@ -18,6 +18,7 @@ return new class extends Migration
             $table->integer('id_pemberikerja')->unsigned();
             $table->string('nama_pekerjaan');
             $table->string('deskripsi_pekerjaan');
+            $table->string('kategori');
             $table->string('fee_pekerjaan');
             $table->string('deadline');
             $table->timestamps();

@@ -17,23 +17,43 @@ class Controller extends BaseController
 
     public function cari_kerja()
     {
+        $kategori = DB::table('pekerjaans')
+        ->select('kategori')
+        ->groupBy('kategori')
+        ->get();
+
         $pekerjaan = Pekerjaan::all(); 
-        return view('cari_kerja', compact('pekerjaan'));
+        return view('cari_kerja', compact('pekerjaan', 'kategori'));
     } 
+
+    public function pekerjaan_kategori($index)
+    {
+        $kategori = DB::table('pekerjaans')
+        ->select('kategori')
+        ->groupBy('kategori')
+        ->get();
+
+        $pekerjaan = DB::table('pekerjaans')
+        ->where('kategori','like',"%".$index."%")
+        ->paginate();
+
+        return view('hasil_cari_kerja', compact('pekerjaan', 'kategori'));
+    } 
+
     public function hasil_cari_kerja(Request $request)
     {
-        // menangkap data pencarian
 		$cari = $request->pencarian;
  
-        // mengambil data dari table pegawai sesuai pencarian data
+        $kategori = DB::table('pekerjaans')
+        ->select('kategori')
+        ->groupBy('kategori')
+        ->get();
+
         $pekerjaan = DB::table('pekerjaans')
         ->where('nama_pekerjaan','like',"%".$cari."%")
         ->paginate();
 
-            // mengirim data pegawai ke view index
-        // return view('index',['pegawai' => $pegawai]);
-        // $pekerjaan = Pekerjaan::all(); 
-        return view('hasil_cari_kerja', compact('pekerjaan'));
+        return view('hasil_cari_kerja', compact('pekerjaan', 'kategori'));
     } 
     public function dashboard()
     {

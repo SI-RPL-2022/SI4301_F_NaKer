@@ -1,22 +1,24 @@
 @extends('app')
 @section('content')
 <div class="container mt-4 ">
-    <h2 class="mb-4">Daftar Pekerjaan</h2>
     <div class="row">
         <div class="col-4 mb-4">
+            <h2 class="mb-4">Daftar Pekerjaan</h2>
         </div>
         <div class="col-8 mb-4">
-            <form action="/cari-kerja/cari" method="GET">
-                <div class="input-group">
-                    <div class="form-outline">
-                        <input type="search" id="form1" class="form-control" placeholder="Cari Pekerjaan" name="pencarian"/>
-                        
-                    </div>
-                    <button type="submit" class="btn" style="background-color:#344E41;color:white;">
-                        <i class="fas fa-search"></i>
-                    </button>
+            <div class="row">
+                <div class="col-6">
+                    <form action="/cari-kerja/cari" method="GET">
+                        <div class="input-group">
+                            <input type="text" id="form1" class="form-control" placeholder="Cari Pekerjaan" name="pencarian"/>
+                                
+                            <button type="submit" class="btn" style="background-color:#344E41;color:white;">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </form>
                 </div>
-            </form>
+            </div>
         </div>
         <div class="col-4">
             <div class="card" style="background-color: #A3B18A;color: white; height:600px;">
@@ -25,9 +27,19 @@
                     Kategori
                 </div>
                 <ul class="list-group list-group-flush" >
-                    <a class="text-dark text-decoration-none " href="#"><li class="list-group-item" style="background-color: #A3B18A;color: white;"><i class="fa-solid fa-circle fa-2xs"></i> IT</li></a>
-                    <a class="text-dark text-decoration-none " href="#"><li class="list-group-item" style="background-color: #A3B18A;color: white;"><i class="fa-solid fa-circle fa-2xs"></i> Desain Grafis</li></a>
-                    <a class="text-dark text-decoration-none " href="#"><li class="list-group-item" style="background-color: #A3B18A;color: white;"><i class="fa-solid fa-circle fa-2xs"></i> Agrikultur</li></a>
+                    @php
+                        if (!$kategori->isEmpty()){
+                    @endphp
+                        @foreach($kategori as $kategoris)
+                        <a class="text-dark text-decoration-none " href="{{ url('/pekerjaan-kategori', $kategoris->kategori ) }}"><li class="list-group-item" style="background-color: #A3B18A;color: white;"><i class="fa-solid fa-circle fa-2xs"></i> {{ $kategoris->kategori }}</li></a>
+                        @endforeach
+                    @php
+                    } else{
+                    @endphp
+                        <p class='text-center'>Tidak ada kategori.</p>
+                    @php
+                    }
+                    @endphp
                 </ul>
                 </div>
         </div>
