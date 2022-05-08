@@ -15,51 +15,6 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    public function cari_kerja()
-    {
-        $kategori = DB::table('pekerjaans')
-        ->select('kategori')
-        ->groupBy('kategori')
-        ->get();
-
-        $pekerjaan = Pekerjaan::all(); 
-        return view('cari_kerja', compact('pekerjaan', 'kategori'));
-    } 
-
-    public function pekerjaan_kategori($index)
-    {
-        $kategori = DB::table('pekerjaans')
-        ->select('kategori')
-        ->groupBy('kategori')
-        ->get();
-
-        $pekerjaan = DB::table('pekerjaans')
-        ->where('kategori','like',"%".$index."%")
-        ->paginate();
-
-        return view('hasil_cari_kerja', compact('pekerjaan', 'kategori'));
-    } 
-
-    public function hasil_cari_kerja(Request $request)
-    {
-		$cari = $request->pencarian;
- 
-        $kategori = DB::table('pekerjaans')
-        ->select('kategori')
-        ->groupBy('kategori')
-        ->get();
-
-        $pekerjaan = DB::table('pekerjaans')
-        ->where('nama_pekerjaan','like',"%".$cari."%")
-        ->paginate();
-
-        return view('hasil_cari_kerja', compact('pekerjaan', 'kategori'));
-    } 
-    public function dashboard()
-    {
-        $pekerjaan = Pekerjaan::all(); 
-        return view('freelancer.dashboard', compact('pekerjaan'));
-    }
     public function profil()
     {
         return view('profil');

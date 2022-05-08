@@ -19,10 +19,10 @@ class Freelancer extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'nama_freelancer',
+        'name',
         'email',
         'password',
-        'umut',
+        'umur',
         'alamat',
         'date_of_birth',
         'place_of_birth',

@@ -67,7 +67,7 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         return Freelancer::create([
-            'nama_freelancer' => $data['firstName'] .' '. $data['lastName'],
+            'name' => $data['firstName'] .' '. $data['lastName'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);

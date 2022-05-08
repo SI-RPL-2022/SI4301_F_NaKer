@@ -47,8 +47,8 @@
             <div class="card text-center">
                 <img src="../gambar/profile.jpg" class="card-img-top" alt="..." style="display: block; margin-left:auto; margin-right: auto; width: 50%; ">
                 <div class="card-body">
-                    <h5 class="card-text">{{ Auth::user()->nama_freelancer }}</h5>
-                    <h5 class="card-text">@faizaleric</h5>
+                    <h5 class="card-text">{{ Auth::guard('web')->user()->name }}</h5>
+                    <h5 class="card-text">{{ Auth::guard('web')->user()->email }}</h5>
                 </div>
                 <!-- <div class="card-footer">
                     <a href="edit-profile"><button class="button">Edit</button></a>
