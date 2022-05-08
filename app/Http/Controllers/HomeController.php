@@ -2,19 +2,32 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Illuminate\Foundation\Bus\DispatchesJobs;
-use Illuminate\Foundation\Validation\ValidatesRequests;
-use Illuminate\Routing\Controller as BaseController;
-
-use App\Models\Pekerjaan;
 use Illuminate\Http\Request;
+use App\Models\Pekerjaan;
 use Illuminate\Support\Facades\DB;
 
-class Controller extends BaseController
+class HomeController extends Controller
 {
-    use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    // public function __construct()
+    // {
+    //     $this->middleware('auth');
+    // }
 
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function index()
+    {
+        $pekerjaan = Pekerjaan::all(); 
+        return view('freelancer.dashboard', compact('pekerjaan'));
+    }
     public function cari_kerja()
     {
         $kategori = DB::table('pekerjaans')
@@ -55,18 +68,9 @@ class Controller extends BaseController
 
         return view('hasil_cari_kerja', compact('pekerjaan', 'kategori'));
     } 
-    public function dashboard()
-    {
-        $pekerjaan = Pekerjaan::all(); 
-        return view('freelancer.dashboard', compact('pekerjaan'));
-    }
-    public function profil()
-    {
-        return view('profil');
-    }
-    public function edit_profil()
-    {
-        return view('edit_profil');
-    }
-    
+    // public function dashboard()
+    // {
+    //     $pekerjaan = Pekerjaan::all(); 
+    //     return view('freelancer.dashboard', compact('pekerjaan'));
+    // }
 }

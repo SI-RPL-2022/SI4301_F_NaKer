@@ -16,14 +16,16 @@ return new class extends Migration
         Schema::create('freelancers', function (Blueprint $table) {
             $table->id('id_freelancer');
             $table->string('nama_freelancer');
-            $table->string('email');
+            $table->string('email')->unique();
+            $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->string('umur');
-            $table->string('alamat');
-            $table->string('date_of_birth');
-            $table->string('place_of_birth');
-            $table->string('no_telepon');
-            $table->string('cv');
+            $table->string('umur')->nullable();
+            $table->string('alamat')->nullable();
+            $table->string('date_of_birth')->nullable();
+            $table->string('place_of_birth')->nullable();
+            $table->string('no_telepon')->nullable();
+            $table->string('cv')->nullable();
+            $table->rememberToken();
             $table->timestamps();
         });
     }

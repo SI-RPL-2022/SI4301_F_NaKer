@@ -19,7 +19,7 @@
     <!-- navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #3A5A40;">
         <div class="container">
-          <a class="navbar-brand" href="/dashboard">NaKer</a>
+          <a class="navbar-brand" href="/">NaKer</a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -28,12 +28,47 @@
                     <a class="nav-link disabled" href="#">Video Training</a>
                 </div>
                 <div class="navbar-nav ms-auto mb-2 mb-lg-0">
-                    <a class="nav-link me-3" href="/cari-kerja">Pekerjaan</a>
-                    <a class="nav-link me-3 disabled" href="#">Status Seleksi</a>
-                    <a class="nav-link me-3 disabled" href="#">Pembayaran</a>
-                    <a class="nav-link me-3" href="/login">Login</a>
-                    <a class="nav-link me-3" href="/registrasi">Register</a>
-                    <a class="nav-link" href="/profile">Faizal Eric <i class="fa-solid fa-user"></i></a>
+                    <li class="nav-item">
+                        <a class="nav-link me-3" href="/cari-kerja">Pekerjaan</a>
+                    </li>
+                    
+                        @guest
+                            @if (Route::has('login'))
+                                <li class="nav-item">
+                                    <a class="nav-link me-3" href="{{ route('freelancer.login') }}">{{ __('Login') }}</a>
+                                </li>
+                            @endif
+
+                            @if (Route::has('register'))
+                                <li class="nav-item">
+                                    <a class="nav-link me-3" href="{{ route('freelancer.register') }}">{{ __('Register') }}</a>
+                                </li>
+                            @endif
+                            @else
+                            <li class="nav-item">
+                                <a class="nav-link me-3 disabled" href="#">Status Seleksi</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link me-3 disabled" href="#">Pembayaran</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a id="navbarDropdown" class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    {{ Auth::user()->nama_freelancer }} <i class="fa-solid fa-user"></i>
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <li><a class="dropdown-item" href="{{ route('logout') }}"
+                                        onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                        {{ __('Logout') }}</a>
+
+                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                            @csrf
+                                        </form>
+                                    </li>
+                                    <li><a class="dropdown-item" href="{{ route('freelancer.profil') }}">Profil</a></li>
+                                </ul>
+                            </li>
+                        @endguest
                 </div>
             
           </div>
