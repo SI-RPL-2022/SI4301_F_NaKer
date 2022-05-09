@@ -45,7 +45,7 @@
                                     {{ Auth::user()->name }} <i class="fa-solid fa-user"></i>
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <li><a class="dropdown-item" href="{{ route('freelancer.profil') }}">Profil</a></li>
+                                    <!-- <li><a class="dropdown-item" href="">Profil</a></li> -->
                                     <li><a class="dropdown-item" href="{{ route('admin.logout') }}"
                                         onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">

@@ -27,7 +27,13 @@ class RedirectIfAuthenticated
                 if($guard === 'admin'){
                     return redirect()->route('admin.dashboard');
                 }
-                return redirect()->route('home');
+                if($guard === 'pemberi_kerja'){
+                    return redirect()->route('pemberi_kerja.dashboard');
+                }
+                if($guard === 'web'){
+                    return redirect()->route('home');
+                }
+                // return redirect()->route('freelancer.dashboard');
                 // return redirect(RouteServiceProvider::HOME);
             }
         }

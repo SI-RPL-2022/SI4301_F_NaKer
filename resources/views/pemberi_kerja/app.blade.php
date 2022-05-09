@@ -19,21 +19,19 @@
     <!-- navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #3A5A40;">
         <div class="container">
-          <a class="navbar-brand" href="/">NaKer</a>
+          <a class="navbar-brand" href="{{ route('pemberi_kerja.dashboard') }}">NaKer (Perusahaan)</a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                <div class="navbar-nav"> 
-                    <a class="nav-link disabled" href="#">Video Training</a>
-                </div>
+                
                 <div class="navbar-nav ms-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link me-3" href="/cari-kerja">Pekerjaan</a>
+                        <a class="nav-link me-3" href="{{ route('cari_kerja') }}">Pekerjaan</a>
                     </li>
                     
-                        @guest
-                            @if (Route::has('login'))
+                        
+                                @if(!Auth::guard('pemberi_kerja')->check())
                                 <li class="nav-item dropdown me-3">
                                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     {{ __('Login') }}
@@ -44,9 +42,7 @@
                                         <li><a class="dropdown-item" href="{{ route('pemberi_kerja.login') }}">Perusahaan</a></li>
                                     </ul>
                                 </li>
-                            @endif
 
-                            @if (Route::has('register'))
                                 <li class="nav-item dropdown me-3">
                                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     {{ __('Register') }}
@@ -57,8 +53,8 @@
                                         <li><a class="dropdown-item" href="{{ route('pemberi_kerja.register') }}">Perusahaan</a></li>
                                     </ul>
                                 </li>
-                            @endif
-                            @else
+                                @endif
+                            @auth('pemberi_kerja')
                             <li class="nav-item">
                                 <a class="nav-link me-3 disabled" href="#">Status Seleksi</a>
                             </li>
@@ -67,22 +63,22 @@
                             </li>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }} <i class="fa-solid fa-user"></i>
+                                    {{ Auth::guard('pemberi_kerja')->user()->name }} <i class="fa-solid fa-user"></i>
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <li><a class="dropdown-item" href="{{ route('freelancer.profil') }}">Profil</a></li>
-                                    <li><a class="dropdown-item" href="{{ route('freelancer.logout') }}"
+                                    <li><a class="dropdown-item" href="{{ route('pemberi_kerja.profil') }}">Profil</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('pemberi_kerja.logout') }}"
                                         onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}</a>
 
-                                        <form id="logout-form" action="{{ route('freelancer.logout') }}" method="POST" class="d-none">
+                                        <form id="logout-form" action="{{ route('pemberi_kerja.logout') }}" method="POST" class="d-none">
                                             @csrf
                                         </form>
                                     </li>
                                 </ul>
                             </li>
-                        @endguest
+                            @endauth
                 </div>
             
           </div>

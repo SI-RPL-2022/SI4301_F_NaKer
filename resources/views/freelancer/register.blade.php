@@ -76,6 +76,7 @@
 </div> -->
 
 <div style="margin-left: 15% ; margin-right: 15%; margin-top:5%">
+    <h3>Freelancer Register</h3>
     <form class="row g-3" method="POST" action="{{ route('register') }}">
     @csrf
         <!-- <div class="col-md-6">

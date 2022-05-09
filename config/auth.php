@@ -21,6 +21,10 @@ return [
         'driver'=> 'eloquent',
         'model' => App\Models\Admin::class,
     ],
+    'pemberi_kerja'=>[
+        'driver'=> 'eloquent',
+        'model' => App\Models\pemberiKerja::class,
+    ],
 
 
     /*
@@ -48,6 +52,10 @@ return [
         'admin' =>[
             'driver'=>'session',
             'provider'=>'admins',
+        ],
+        'pemberi_kerja' =>[
+            'driver'=>'session',
+            'provider'=>'pemberi_kerjas',
         ],
     ],
 
@@ -82,6 +90,10 @@ return [
             'driver'=>'eloquent',
             'model'=>App\Models\Admin::class,
         ],
+        'pemberi_kerjas' =>[
+            'driver'=>'eloquent',
+            'model'=>App\Models\pemberiKerja::class,
+        ],
     ],
 
     /*
@@ -109,6 +121,10 @@ return [
         'admins'=>[
             'driver'=>'eloquent',
             'model'=>App\Models\Admin::class,
+        ],
+        'pemberi_kerjas'=>[
+            'driver'=>'eloquent',
+            'model'=>App\Models\pemberiKerja::class,
         ],
     ],
 

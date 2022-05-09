@@ -71,7 +71,13 @@
     </div>
 </div> -->
 <div style="margin-left: 30% ; margin-right: 30%; margin-top:10%">
-    <form class="row g-3" method="POST" action="{{ route('login') }}">
+    <h3>Freelancer Login</h3>
+    <form class="row g-3" method="POST" action="{{ route('freelancer.login') }}">
+        @if (Session::get('fail'))
+            <div class="alert alert-danger">
+                {{ Session::get('fail') }}
+            </div>
+        @endif
         @csrf
         <div class="col-12">
             <label for="inputAddress" class="form-label">{{ __('Email Address') }}</label>
@@ -109,8 +115,8 @@
                 </a>
             @endif
         </div>
-        <div class="container" style="text-align: center; background-color: #344E41; width: 200px; height: 50px;border-radius: 5%;">
-            <button type="submit" class="btn" style="color:white;font-size:25px">
+        <div class="container" style="text-align: center;">
+            <button type="submit" class="btn" style="color:white;font-size:20px;background-color: #344E41; width: 200px; height: 50px;">
                 {{ __('Login') }}
             </button>
         </div>

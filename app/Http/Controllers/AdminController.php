@@ -26,6 +26,7 @@ class AdminController extends Controller
         }
         $pekerjaan = Pekerjaan::all(); 
         return view('freelancer.dashboard', compact('pekerjaan'));
+        
     }
 
     function logout(){

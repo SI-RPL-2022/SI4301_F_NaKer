@@ -9,17 +9,31 @@ use Illuminate\Support\Facades\Auth;
 
 class FreelancerController extends Controller
 {
-    public function __construct()
+    function check_login(Request $request)
     {
-        $this->middleware('auth');
+        $request->validate([
+            'email'=>'required|email|exists:freelancers,email',
+            'password'=>'required|min:5|max:30',
+        ],[
+            'email.exists'=>'This email is not exists in freelancers table',
+        ]);
+
+        $creds = $request->only('email', 'password');
+
+        if( Auth::guard('web')->attempt($creds) ){
+            return redirect()->route('home');
+        }else{
+            return redirect()->route('freelancer.login')->with('fail','Incorrect credentials');
+        }
+        
     }
     public function profil()
     {
-        return view('profil');
+        return view('freelancer.profil');
     }
     public function edit_profil()
     {
-        return view('edit_profil');
+        return view('freelancer.edit_profil');
     }
     function logout(){
         Auth::guard('web')->logout();
