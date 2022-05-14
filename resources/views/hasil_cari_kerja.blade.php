@@ -52,9 +52,22 @@
                 <div class="col-sm-6">
                     <div class="card" style="background-color:#DAD7CD;">
                         <div class="card-body">
-                            <h5 class="card-title">{{ $pekerjaans->nama_pekerjaan }}</h5>
+                            <p class="card-title"><strong>{{ $pekerjaans->nama_pekerjaan }}</strong> ({{ $pekerjaans->name }}, <i class="" style="color:#636363;">{{ $pekerjaans->alamat }}</i>)</p>
                             <p class="card-text">{{ $pekerjaans->deskripsi_pekerjaan }}</p>
-                            <a href="#" class="btn text-light end-0" style="float:right; background-color:#344E41;">Apply</a>
+                            @auth('web')
+                            <a href="{{route('freelancer.lamar_kerja', ['id'=>$pekerjaans->id_pekerjaan])}}" class="btn text-light end-0" style="float:right; background-color:#344E41;">Apply</a>
+
+                            @endauth
+                            @if(!Auth::guard('web')->check())
+                            <button onclick="myFunction()" class="btn text-light end-0" style="float:right; background-color:#344E41;">Apply</button>
+
+                                <script>
+                                    function myFunction() {
+                                        alert("Kamu harus login sebagai freelancer!");
+                                        window.location = "{{ route('freelancer.login') }}";
+                                    }
+                                </script>
+                            @endif
                         </div>
                     </div>
                 </div>

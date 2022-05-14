@@ -28,6 +28,8 @@ class Freelancer extends Authenticatable
         'place_of_birth',
         'no_telepon',
         'cv',
+        'portofolio',
+        'sertifikat',
     ];
 
     /**

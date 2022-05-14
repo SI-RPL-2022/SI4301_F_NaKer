@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Pekerjaan;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -30,47 +31,100 @@ class HomeController extends Controller
     }
     public function cari_kerja()
     {
-        $kategori = DB::table('pekerjaans')
-        ->select('kategori')
-        ->groupBy('kategori')
-        ->get();
 
-        $pekerjaan = Pekerjaan::all(); 
-        return view('cari_kerja', compact('pekerjaan', 'kategori'));
+        if(Auth::guard('web')->check()){
+            $kategori = DB::table('pekerjaans')
+                ->select('kategori')->whereNotIn('id_pekerjaan',function($query) {
+                    $query->select('id_pekerjaan')->from('my_jobs')->where('id_freelancer',Auth::guard('web')->user()->id_freelancer);
+                 })->groupBy('kategori')->get();
+                
+            $pekerjaan = DB::table("pekerjaans")->select('*')->whereNotIn('id_pekerjaan',function($query) {
+                $query->select('id_pekerjaan')
+                        ->from('my_jobs')
+                        ->where('id_freelancer',Auth::guard('web')->user()->id_freelancer);
+             })->join('pemberi_kerjas', 'pekerjaans.id_pemberikerja', '=', 'pemberi_kerjas.id_pemberikerja')->get();
+
+             return view('cari_kerja', compact('pekerjaan', 'kategori'));
+            // DB::table('pekerjaans')
+            // ->join('my_jobs', 'pekerjaans.id_freelancer', '=', 'my_jobs.id_freelancer')
+            // ->get();
+        }
+
+        if(!Auth::guard('web')->check()){
+            $kategori = DB::table('pekerjaans')
+                    ->select('kategori')
+                    ->groupBy('kategori')
+                    ->get();
+
+            $pekerjaan = DB::table("pekerjaans")->select('*')
+                    ->join('pemberi_kerjas', 'pekerjaans.id_pemberikerja', '=', 'pemberi_kerjas.id_pemberikerja')
+                    ->get();
+            return view('cari_kerja', compact('pekerjaan', 'kategori'));
+        }
+
     } 
 
     public function pekerjaan_kategori($index)
     {
-        $kategori = DB::table('pekerjaans')
-        ->select('kategori')
-        ->groupBy('kategori')
-        ->get();
 
-        $pekerjaan = DB::table('pekerjaans')
-        ->where('kategori','like',"%".$index."%")
-        ->paginate();
+        if(Auth::guard('web')->check()){
+            $kategori = DB::table('pekerjaans')
+                ->select('kategori')->whereNotIn('id_pekerjaan',function($query) {
+                    $query->select('id_pekerjaan')->from('my_jobs')->where('id_freelancer',Auth::guard('web')->user()->id_freelancer);
+                 })->groupBy('kategori')->get();
+                
+            $pekerjaan = DB::table("pekerjaans")->select('*')->whereNotIn('id_pekerjaan',function($query) {
+                $query->select('id_pekerjaan')->from('my_jobs')->where('id_freelancer',Auth::guard('web')->user()->id_freelancer);
+             })->join('pemberi_kerjas', 'pekerjaans.id_pemberikerja', '=', 'pemberi_kerjas.id_pemberikerja')->where('kategori','like',"%".$index."%")->get();
 
-        return view('hasil_cari_kerja', compact('pekerjaan', 'kategori'));
+             return view('hasil_cari_kerja', compact('pekerjaan', 'kategori'));
+        }
+        
+        if(!Auth::guard('web')->check()){
+            $kategori = DB::table('pekerjaans')
+                    ->select('kategori')
+                    ->groupBy('kategori')
+                    ->get();
+
+            $pekerjaan = DB::table('pekerjaans')
+                    ->where('kategori','like',"%".$index."%")
+                    ->join('pemberi_kerjas', 'pekerjaans.id_pemberikerja', '=', 'pemberi_kerjas.id_pemberikerja')
+                    ->paginate();
+            return view('hasil_cari_kerja', compact('pekerjaan', 'kategori'));
+        }
+
     } 
 
     public function hasil_cari_kerja(Request $request)
     {
 		$cari = $request->pencarian;
- 
-        $kategori = DB::table('pekerjaans')
-        ->select('kategori')
-        ->groupBy('kategori')
-        ->get();
+        
+        if(Auth::guard('web')->check()){
+            $kategori = DB::table('pekerjaans')
+                ->select('kategori')->whereNotIn('id_pekerjaan',function($query) {
+                    $query->select('id_pekerjaan')->from('my_jobs')->where('id_freelancer',Auth::guard('web')->user()->id_freelancer);
+                 })->groupBy('kategori')->get();
+                
+            $pekerjaan = DB::table("pekerjaans")->select('*')->whereNotIn('id_pekerjaan',function($query) {
+                $query->select('id_pekerjaan')->from('my_jobs')->where('id_freelancer',Auth::guard('web')->user()->id_freelancer);
+             })->where('nama_pekerjaan','like',"%".$cari."%")
+             ->join('pemberi_kerjas', 'pekerjaans.id_pemberikerja', '=', 'pemberi_kerjas.id_pemberikerja')->get();
 
-        $pekerjaan = DB::table('pekerjaans')
-        ->where('nama_pekerjaan','like',"%".$cari."%")
-        ->paginate();
+             return view('hasil_cari_kerja', compact('pekerjaan', 'kategori'));
+        }
+        
+        if(!Auth::guard('web')->check()){
+            $kategori = DB::table('pekerjaans')
+                    ->select('kategori')
+                    ->groupBy('kategori')
+                    ->get();
 
-        return view('hasil_cari_kerja', compact('pekerjaan', 'kategori'));
+            $pekerjaan = DB::table('pekerjaans')
+                    ->where('nama_pekerjaan','like',"%".$cari."%")
+                    ->join('pemberi_kerjas', 'pekerjaans.id_pemberikerja', '=', 'pemberi_kerjas.id_pemberikerja')
+                    ->paginate();
+            return view('hasil_cari_kerja', compact('pekerjaan', 'kategori'));
+        }
+
     } 
-    // public function dashboard()
-    // {
-    //     $pekerjaan = Pekerjaan::all(); 
-    //     return view('freelancer.dashboard', compact('pekerjaan'));
-    // }
 }
