@@ -63,7 +63,7 @@
                                 <a class="nav-link me-3 disabled" href="#">Status Seleksi</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link me-3 disabled" href="#">Pembayaran</a>
+                                <a class="nav-link me-3" href="{{ route('freelancer.pembayaran') }}">Pembayaran</a>
                             </li>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
