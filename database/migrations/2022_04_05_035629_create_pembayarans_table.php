@@ -15,11 +15,10 @@ return new class extends Migration
     {
         Schema::create('pembayarans', function (Blueprint $table) {
             $table->id();
-            $table->integer('id_pekerjaan')->unsigned();
-            $table->integer('id_pemberikerja')->unsigned();
-            $table->integer('id_freelancer')->unsigned();
-            $table->integer('jumlah_pembayaran');
-            $table->string('tanggal_pembayaran');
+            $table->integer('id_myjob')->unsigned();
+            $table->integer('jumlah_pembayaran')->nullable();
+            $table->string('bukti_pembayaran')->nullable();
+            $table->string('status_pembayaran')->nullable();
             $table->timestamps();
         });
     }

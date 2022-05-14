@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Pekerjaan;
 use App\Models\Freelancer;
 use App\Models\myJob;
+use App\Models\Pembayaran;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
@@ -90,8 +91,6 @@ class FreelancerController extends Controller
         }
         
 
-        
-        
         if($cvName == ""){
             $f->save();
             
@@ -106,6 +105,51 @@ class FreelancerController extends Controller
         }
 
     }
+
+    function pembayaran()
+    {
+        $pekerjaan_onboard = DB::table("pembayarans")->select('*')
+            ->join('my_jobs', 'pembayarans.id_myjob', '=', 'my_jobs.id_myjob')
+            ->join('pekerjaans', 'my_jobs.id_pekerjaan', '=', 'pekerjaans.id_pekerjaan')
+            ->join('pemberi_kerjas', 'pekerjaans.id_pemberikerja', '=', 'pemberi_kerjas.id_pemberikerja')
+            ->where('my_jobs.id_freelancer',Auth::guard('web')->user()->id_freelancer)
+            ->where('my_jobs.status','Selesai')
+            ->get();
+        return view('freelancer.pembayaran', compact('pekerjaan_onboard'));
+    }
+    
+    function check_pembayaran($id)
+    {
+        $pekerjaan_onboard = DB::table("pembayarans")->select('*')
+            ->join('my_jobs', 'pembayarans.id_myjob', '=', 'my_jobs.id_myjob')
+            ->join('pekerjaans', 'my_jobs.id_pekerjaan', '=', 'pekerjaans.id_pekerjaan')
+            ->join('pemberi_kerjas', 'pekerjaans.id_pemberikerja', '=', 'pemberi_kerjas.id_pemberikerja')
+            ->where('my_jobs.id_freelancer',Auth::guard('web')->user()->id_freelancer)
+            ->where('my_jobs.status','Selesai')
+            ->get();
+        $detail_bayar = DB::table("pembayarans")->select('*')
+            ->join('my_jobs', 'pembayarans.id_myjob', '=', 'my_jobs.id_myjob')
+            ->join('pekerjaans', 'my_jobs.id_pekerjaan', '=', 'pekerjaans.id_pekerjaan')
+            ->join('pemberi_kerjas', 'pekerjaans.id_pemberikerja', '=', 'pemberi_kerjas.id_pemberikerja')
+            ->where('my_jobs.id_freelancer',Auth::guard('web')->user()->id_freelancer)
+            ->where('pembayarans.id',$id)
+            ->where('my_jobs.status','Selesai')
+            ->get();
+        return view('freelancer.pembayaran', compact('pekerjaan_onboard','detail_bayar'));
+    }
+
+    function selesai_bayar($id){
+        $status_bayar = Pembayaran::find($id);
+        $status_bayar->status_pembayaran = "Sudah Bayar";
+        $save = $status_bayar->save();
+
+        if( $save ){
+            return redirect()->route('freelancer.pembayaran')->with('success', 'Pembayaran selesai');
+        }else {
+            return redirect()->back()->with('fail', 'Gagal menyelesaikan pembayaran');
+        }
+    }
+
     public function profil()
     {
         return view('freelancer.profil');

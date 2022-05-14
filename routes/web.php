@@ -39,6 +39,9 @@ Route::prefix('freelancer')->name('freelancer.')->group(function(){
         
         Route::get('/profil', [FreelancerController::class, 'profil'])->name('profil');
         Route::get('/edit-profil', [FreelancerController::class, 'edit_profil'])->name('edit_profil');
+        Route::get('/pembayaran', [FreelancerController::class, 'pembayaran'])->name('pembayaran');
+        Route::get('/check-pembayaran/{id}', [FreelancerController::class, 'check_pembayaran'])->name('check_pembayaran');
+        Route::get('/selesai-bayar/{id}', [FreelancerController::class, 'selesai_bayar'])->name('selesai_bayar');
         Route::get('/lamar-kerja/{id}', [FreelancerController::class, 'lamar_kerja'])->name('lamar_kerja');
         Route::post('/lamar-kerja/applied/{id}', [FreelancerController::class, 'applied'])->name('applied');
         Route::post('/logout', [FreelancerController::class, 'logout'])->name('logout');
