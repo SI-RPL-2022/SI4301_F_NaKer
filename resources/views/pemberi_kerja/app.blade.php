@@ -27,7 +27,7 @@
                 
                 <div class="navbar-nav ms-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link me-3" href="{{ route('cari_kerja') }}">Pekerjaan</a>
+                        <a class="nav-link me-3" href="{{ route('pemberi_kerja.pekerjaan') }}">Pekerjaan</a>
                     </li>
                     
                         
