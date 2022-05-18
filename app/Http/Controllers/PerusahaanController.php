@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\pemberiKerja;
+use App\Models\Pekerjaan;
 use Illuminate\Support\Facades\Auth;
 
 class PerusahaanController extends Controller
@@ -55,6 +56,34 @@ class PerusahaanController extends Controller
         }
         
     }
+
+    function create_kerja(Request $request){
+        $request->validate([
+            'judul_pekerjaan'=>'required',
+            'deskripsi_pekerjaan'=>'required|max:100',
+            'gaji'=>'required|integer',
+            'kategori'=>'required',
+            'deadline_daftar'=>'required|date|after:tomorrow',
+        ],[
+            'deskripsi_pekerjaan.max'=>'Maksimal 100 karakter!',
+            'gaji.integer'=>'Isi dengan angka!',
+            'deadline_daftar.after'=>'Minimal deadline 1 hari dari hari ini!',
+        ]);
+        $pekerjaan = new Pekerjaan();
+        $pekerjaan->nama_pekerjaan = $request->judul_pekerjaan;
+        $pekerjaan->deskripsi_pekerjaan = $request->deskripsi_pekerjaan;
+        $pekerjaan->fee_pekerjaan = $request->gaji;
+        $pekerjaan->kategori = $request->kategori;
+        $pekerjaan->deadline = date("Y-m-d H:i:s", strtotime($request->deadline_daftar));
+        $pekerjaan->id_pemberikerja = Auth::guard('pemberi_kerja')->user()->id_pemberikerja;
+        $save = $pekerjaan->save();
+        if( $save ){
+            return redirect()->back()->with('success', 'Berhasil tambah pekerjaan');
+       }else {
+            return redirect()->back()->with('fail', 'Gagal tambah pekerjaan');
+       }
+    }
+
     function logout(){
         Auth::guard('pemberi_kerja')->logout();
         return redirect()->route('pemberi_kerja.login');

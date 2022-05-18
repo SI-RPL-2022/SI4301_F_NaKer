@@ -76,6 +76,8 @@ Route::prefix('pemberi_kerja')->name('pemberi_kerja.')->group(function(){
         Route::post('/logout', [PerusahaanController::class, 'logout'])->name('logout');
         Route::get('/profil', [PerusahaanController::class, 'profil'])->name('profil');
         Route::get('/edit-profil', [PerusahaanController::class, 'edit_profil'])->name('edit_profil');
+        Route::view('/tambah-pekerjaan', 'pemberi_kerja.tambah_kerja')->name('tambah_kerja');
+        Route::post('/create-kerja', [PerusahaanController::class, 'create_kerja'])->name('create_kerja');
     });
 
 });
