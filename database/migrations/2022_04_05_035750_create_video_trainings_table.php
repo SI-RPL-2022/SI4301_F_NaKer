@@ -16,9 +16,10 @@ return new class extends Migration
         Schema::create('video_trainings', function (Blueprint $table) {
             $table->id();
             $table->integer('id_admin')->unsigned();
-            $table->string('nama_videotraining');
-            $table->string('deskripsi_videotraining');
-            $table->string('tanggal_terbit');
+            $table->string('nama_videotraining')->nullable();
+            $table->string('deskripsi_videotraining')->nullable();
+            $table->string('link_video')->nullable();
+            $table->string('durasi')->nullable();
             $table->timestamps();
         });
     }

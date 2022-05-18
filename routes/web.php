@@ -25,6 +25,7 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/cari-kerja', [HomeController::class, 'cari_kerja'])->name('cari_kerja');
 Route::get('/cari-kerja/cari', [HomeController::class, 'hasil_cari_kerja'])->name('hasil_cari_kerja');
 Route::get('/pekerjaan-kategori/{index}', [HomeController::class, 'pekerjaan_kategori'])->name('pekerjaan_kategori');
+Route::get('/video-training', [HomeController::class, 'video_training'])->name('video_training');
 
 Route::prefix('freelancer')->name('freelancer.')->group(function(){
 

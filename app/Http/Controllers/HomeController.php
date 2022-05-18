@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Pekerjaan;
+use App\Models\videoTraining;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
@@ -28,6 +29,11 @@ class HomeController extends Controller
     {
         $pekerjaan = Pekerjaan::all(); 
         return view('freelancer.dashboard', compact('pekerjaan'));
+    }
+    function video_training()
+    {
+        $vid = videoTraining::all();
+        return view('video_training', compact('vid'));
     }
     public function cari_kerja()
     {
