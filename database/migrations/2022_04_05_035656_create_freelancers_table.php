@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('alamat')->nullable();
             $table->string('date_of_birth')->nullable();
             $table->string('place_of_birth')->nullable();
+            $table->string('LinkedinName')->nullable();
             $table->string('no_telepon')->nullable();
             $table->string('cv')->nullable();
             $table->string('portofolio')->nullable();

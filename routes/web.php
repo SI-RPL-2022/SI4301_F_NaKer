@@ -40,6 +40,7 @@ Route::prefix('freelancer')->name('freelancer.')->group(function(){
         
         Route::get('/profil', [FreelancerController::class, 'profil'])->name('profil');
         Route::get('/edit-profil', [FreelancerController::class, 'edit_profil'])->name('edit_profil');
+        Route::patch('/update_profil', [FreelancerController::class, 'update_profil'])->name('update_profil');
         Route::get('/pembayaran', [FreelancerController::class, 'pembayaran'])->name('pembayaran');
         Route::get('/check-pembayaran/{id}', [FreelancerController::class, 'check_pembayaran'])->name('check_pembayaran');
         Route::get('/selesai-bayar/{id}', [FreelancerController::class, 'selesai_bayar'])->name('selesai_bayar');
@@ -82,6 +83,8 @@ Route::prefix('pemberi_kerja')->name('pemberi_kerja.')->group(function(){
         Route::post('/logout', [PerusahaanController::class, 'logout'])->name('logout');
         Route::get('/profil', [PerusahaanController::class, 'profil'])->name('profil');
         Route::get('/edit-profil', [PerusahaanController::class, 'edit_profil'])->name('edit_profil');
+        Route::get('/memberi_pembayaran', [PerusahaanController::class, 'memberi_pembayaran'])->name('memberi_pembayaran');
+        Route::patch('/update_profil', [PerusahaanController::class, 'update_profil'])->name('update_profil');
         Route::view('/tambah-pekerjaan', 'pemberi_kerja.tambah_kerja')->name('tambah_kerja');
         Route::get('/pekerjaan', [PerusahaanController::class, 'pekerjaan'])->name('pekerjaan');
         Route::get('/pekerjaan/cari', [PerusahaanController::class, 'hasil_pekerjaan'])->name('hasil_pekerjaan');

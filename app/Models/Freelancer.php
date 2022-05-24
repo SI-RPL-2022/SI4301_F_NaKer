@@ -26,6 +26,7 @@ class Freelancer extends Authenticatable
         'alamat',
         'date_of_birth',
         'place_of_birth',
+        'LinkedinName',
         'no_telepon',
         'cv',
         'portofolio',

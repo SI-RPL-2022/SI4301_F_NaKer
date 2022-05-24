@@ -9,48 +9,49 @@ use App\Models\myJob;
 use App\Models\Pembayaran;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 
 class FreelancerController extends Controller
 {
     function check_login(Request $request)
     {
         $request->validate([
-            'email'=>'required|email|exists:freelancers,email',
-            'password'=>'required|min:5|max:30',
-        ],[
-            'email.exists'=>'This email is not exists in freelancers table',
+            'email' => 'required|email|exists:freelancers,email',
+            'password' => 'required|min:5|max:30',
+        ], [
+            'email.exists' => 'This email is not exists in freelancers table',
         ]);
 
         $creds = $request->only('email', 'password');
 
-        if( Auth::guard('web')->attempt($creds) ){
+        if (Auth::guard('web')->attempt($creds)) {
             return redirect()->route('home');
-        }else{
-            return redirect()->route('freelancer.login')->with('fail','Incorrect credentials');
+        } else {
+            return redirect()->route('freelancer.login')->with('fail', 'Incorrect credentials');
         }
-        
     }
 
-    function applied($id, Request $request){
+    function applied($id, Request $request)
+    {
         $index = Auth::guard('web')->user()->id_freelancer;
-        
+
         $myjob = new myJob();
         $myjob->id_pekerjaan = $id;
         $myjob->id_freelancer = $index;
         $myjob->status = "Tahap Seleksi";
         $saveJob = $myjob->save();
-        
+
         $f = Freelancer::find($index);
         $cvName = $request->cvfile;
         $portoName = $request->portofile;
         $sertifName = $request->sertifikatfile;
-        
-        
+
+
         //CV
-        if($cvName != ""){
-            if($f->cv != '' && $f->cv != null){
+        if ($cvName != "") {
+            if ($f->cv != '' && $f->cv != null) {
                 $path = public_path('dokumen/cv/');
-                $fileCv = $path.$f->cv;
+                $fileCv = $path . $f->cv;
                 unlink($fileCv);
             }
             $cvName = $cvName->getClientOriginalName();
@@ -59,10 +60,10 @@ class FreelancerController extends Controller
             $save = $f->save();
         }
 
-        if($portoName != ""){
-            if($f->portofolio != '' && $f->portofolio != null){
+        if ($portoName != "") {
+            if ($f->portofolio != '' && $f->portofolio != null) {
                 $path = public_path('dokumen/portofolio/');
-                $filePorto = $path.$f->portofolio;
+                $filePorto = $path . $f->portofolio;
                 unlink($filePorto);
             }
             $portoName = $portoName->getClientOriginalName();
@@ -71,10 +72,10 @@ class FreelancerController extends Controller
             $save = $f->save();
         }
 
-        if($sertifName != ""){
-            if($f->sertifikat != '' && $f->sertifikat != null){
+        if ($sertifName != "") {
+            if ($f->sertifikat != '' && $f->sertifikat != null) {
                 $path = public_path('dokumen/sertifikat/');
-                $fileSertif = $path.$f->sertifikat;
+                $fileSertif = $path . $f->sertifikat;
                 unlink($fileSertif);
             }
             $sertifName = $sertifName->getClientOriginalName();
@@ -83,27 +84,23 @@ class FreelancerController extends Controller
             $save = $f->save();
         }
 
-        
-        if( $saveJob ){
+
+        if ($saveJob) {
             return redirect()->route('cari_kerja')->with('success', 'Lamaran kerja berhasil dibuat!');
-        }else {
+        } else {
             return redirect()->back()->with('fail', 'Gagal melamar kerja');
         }
-        
 
-        if($cvName == ""){
-            $f->save();
-            
-        }
-        if($portoName == ""){
-            $f->save();
-            
-        }
-        if($sertifName == ""){
-            $f->save();
-            
-        }
 
+        if ($cvName == "") {
+            $f->save();
+        }
+        if ($portoName == "") {
+            $f->save();
+        }
+        if ($sertifName == "") {
+            $f->save();
+        }
     }
 
     function pembayaran()
@@ -112,58 +109,85 @@ class FreelancerController extends Controller
             ->join('my_jobs', 'pembayarans.id_myjob', '=', 'my_jobs.id_myjob')
             ->join('pekerjaans', 'my_jobs.id_pekerjaan', '=', 'pekerjaans.id_pekerjaan')
             ->join('pemberi_kerjas', 'pekerjaans.id_pemberikerja', '=', 'pemberi_kerjas.id_pemberikerja')
-            ->where('my_jobs.id_freelancer',Auth::guard('web')->user()->id_freelancer)
-            ->where('my_jobs.status','Selesai')
+            ->where('my_jobs.id_freelancer', Auth::guard('web')->user()->id_freelancer)
+            ->where('my_jobs.status', 'Selesai')
             ->get();
         return view('freelancer.pembayaran', compact('pekerjaan_onboard'));
     }
-    
+
     function check_pembayaran($id)
     {
         $pekerjaan_onboard = DB::table("pembayarans")->select('*')
             ->join('my_jobs', 'pembayarans.id_myjob', '=', 'my_jobs.id_myjob')
             ->join('pekerjaans', 'my_jobs.id_pekerjaan', '=', 'pekerjaans.id_pekerjaan')
             ->join('pemberi_kerjas', 'pekerjaans.id_pemberikerja', '=', 'pemberi_kerjas.id_pemberikerja')
-            ->where('my_jobs.id_freelancer',Auth::guard('web')->user()->id_freelancer)
-            ->where('my_jobs.status','Selesai')
+            ->where('my_jobs.id_freelancer', Auth::guard('web')->user()->id_freelancer)
+            ->where('my_jobs.status', 'Selesai')
             ->get();
         $detail_bayar = DB::table("pembayarans")->select('*')
             ->join('my_jobs', 'pembayarans.id_myjob', '=', 'my_jobs.id_myjob')
             ->join('pekerjaans', 'my_jobs.id_pekerjaan', '=', 'pekerjaans.id_pekerjaan')
             ->join('pemberi_kerjas', 'pekerjaans.id_pemberikerja', '=', 'pemberi_kerjas.id_pemberikerja')
-            ->where('my_jobs.id_freelancer',Auth::guard('web')->user()->id_freelancer)
-            ->where('pembayarans.id',$id)
-            ->where('my_jobs.status','Selesai')
+            ->where('my_jobs.id_freelancer', Auth::guard('web')->user()->id_freelancer)
+            ->where('pembayarans.id', $id)
+            ->where('my_jobs.status', 'Selesai')
             ->get();
-        return view('freelancer.pembayaran', compact('pekerjaan_onboard','detail_bayar'));
+        return view('freelancer.pembayaran', compact('pekerjaan_onboard', 'detail_bayar'));
     }
 
-    function selesai_bayar($id){
+    function selesai_bayar($id)
+    {
         $status_bayar = Pembayaran::find($id);
         $status_bayar->status_pembayaran = "Sudah Bayar";
         $save = $status_bayar->save();
 
-        if( $save ){
+        if ($save) {
             return redirect()->route('freelancer.pembayaran')->with('success', 'Pembayaran selesai');
-        }else {
+        } else {
             return redirect()->back()->with('fail', 'Gagal menyelesaikan pembayaran');
         }
     }
 
     public function profil()
     {
-        return view('freelancer.profil');
+        // return view('freelancer.profil');
+        $user = Auth()->user();
+        return view('freelancer.profil', compact('user'));
     }
     public function edit_profil()
     {
         return view('freelancer.edit_profil');
     }
 
-    public function lamar_kerja($id){
-        $pekerjaan = Pekerjaan::find($id); 
+    public function update_profil(Request $request)
+    {
+        $validatedData = $request->validate([
+            "id" => "required",
+            'email' => "required",
+            'date_of_birth' => 'required',
+            'alamat'=>'required',
+            'portofolio'=>'required'
+        ]);
+        $user = Freelancer::find($request->id);
+        $user->email = $request->email;
+        $user->date_of_birth = $request->date_of_birth;
+        $user->alamat = $request->alamat;
+        $user->portofolio = $request->portofolio;
+        $user->sertifikat = $request->sertifikat;
+        $user->LinkedinName = $request->LinkedinName;
+        $user->save();
+
+        $request->session()->flash("success", 'Profil Anda sudah berhasil di-edit!');
+        return redirect()->back()->with("success", 'Profil Anda sudah berhasil di-edit!');
+    }
+
+    public function lamar_kerja($id)
+    {
+        $pekerjaan = Pekerjaan::find($id);
         return view('freelancer.lamar_kerja', compact('pekerjaan'));
     }
-    function logout(){
+    function logout()
+    {
         Auth::guard('web')->logout();
         return redirect('/');
     }

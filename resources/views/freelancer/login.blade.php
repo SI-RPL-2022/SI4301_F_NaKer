@@ -121,7 +121,7 @@
             </button>
         </div>
         <div class="container" style="text-align: center; padding-top: 2%;">
-            <p>Don't have an account? <a href="registrasi" style="color:black">Register</a>.</p>
+            <p>Don't have an account? <a href="register" style="color:black">Register</a>.</p>
         </div>
     </form>
 </div>
