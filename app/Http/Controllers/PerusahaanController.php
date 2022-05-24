@@ -12,35 +12,11 @@ class PerusahaanController extends Controller
 {
     public function profil()
     {
-        // return view('pemberi_kerja.profil');
-        $user = Auth()->user();
         return view('pemberi_kerja.profil');
     }
     public function edit_profil()
     {
         return view('pemberi_kerja.edit_profil');
-    }
-    public function update_profil(Request $request)
-    {
-        $validatedData = $request->validate([
-            "id" => "required",
-            'email' => "required",
-            'date_of_birth' => 'required',
-            'alamat'=>'required'
-        ]);
-        $user = pemberiKerja::find($request->id);
-        $user->email = $request->email;
-        $user->date_of_birth = $request->date_of_birth;
-        $user->alamat = $request->alamat;
-        $user->no_telepon = $request->no_telepon;
-        $user->save();
-
-        $request->session()->flash("success", 'Profil Anda sudah berhasil di-edit!');
-        return redirect()->back()->with("success", 'Profil Anda sudah berhasil di-edit!');
-    }
-    public function memberi_pembayaran()
-    {
-        return view('pemberi_kerja.memberi_pembayaran');
     }
     function create(Request $request){
         $request->validate([

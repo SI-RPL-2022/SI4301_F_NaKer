@@ -1,4 +1,4 @@
-@extends('app')
+@extends('pemberi_kerja.app')
 @section('content')
 <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-inner">
@@ -34,8 +34,8 @@
                     <a href="edit-profile"><button class="button">Edit</button></a>
                 </div> -->
                 <div class="container mb-4" style="text-align: center;">
-                    <a href="">
-                        <a href="{{ route('pemberi_kerja.edit_profil') }}" class="btn" style="color:white;font-size:20px;background-color: #588157; width: 150px; height: 50px;">Edit</a>
+                    <a href="edit-profile">
+                        <a href="{{ route('freelancer.edit_profil') }}" class="btn" style="color:white;font-size:20px;background-color: #588157; width: 150px; height: 50px;">Edit</a>
                     </a>
                 </div>
             </div>
@@ -45,20 +45,24 @@
                 <div class="card-body" style="background-color: #344E41; color: white; border-radius: 5%;">
                     <form class="row g-3">
                         <div class="col-12">
-                            <label for="date_of_birth" class="form-label">Date Of Birth</label>
-                            <input type="email" class="form-control" id="date_of_birth" value="{{ Auth::guard('pemberi_kerja')->user()->date_of_birth }}" disabled>
+                            <label for="DateOfBirth" class="form-label">Date Of Birth</label>
+                            <input type="email" class="form-control" id="DateOfBirth">
                         </div>
                         <div class="col-12">
-                            <label for="alamat" class="form-label">Address</label>
-                            <input type="text" class="form-control" id="alamat" value="{{ Auth::guard('pemberi_kerja')->user()->alamat }}" disabled>
+                            <label for="inputAddress" class="form-label">Address</label>
+                            <input type="text" class="form-control" id="inputAddress">
                         </div>
                         <div class="col-12">
-                            <label for="email" class="form-label">Email</label>
-                            <input type="text" class="form-control" id="email" value="{{ Auth::guard('pemberi_kerja')->user()->email }}" disabled>
+                            <label for="inputEmail" class="form-label">Email</label>
+                            <input type="text" class="form-control" id="inputEmail">
                         </div>
                         <div class="col-md-12">
-                            <label for="no_telepon" class="form-label">No Telepon</label>
-                            <input type="text" class="form-control" id="no_telepon" id="no_telepon" value="{{ Auth::guard('pemberi_kerja')->user()->no_telepon }}" disabled>
+                            <label for="inputLinkedin" class="form-label">Linkedin Name</label>
+                            <input type="text" class="form-control" id="inputLinkedin">
+                        </div>
+                        <div class="col-md-12">
+                            <label for="inputCV" class="form-label">Curriculum Vitae</label>
+                            <input type="file" class="form-control" id="inputCV">
                         </div>
                     </form>
                 </div>
@@ -69,11 +73,11 @@
                 <div class="card-body" style="background-color: #344E41; color: white; border-radius: 5%;">
                     <div class="mb-3">
                         <label for="Experience" class="form-label">Experience</label>
-                        <input type="textarea" class="form-control" name="portofolio" id="portofolio" rows="6" value="{{ Auth::guard('pemberi_kerja')->user()->portofolio }}" disabled>
+                        <textarea class="form-control" id="Experience" rows="6"></textarea>
                     </div>
                     <div class="mb-3">
                         <label for="Certification" class="form-label">Certification</label>
-                        <input type="textarea" class="form-control" name="sertifikat" id="sertifikat" rows="6" value="{{ Auth::guard('pemberi_kerja')->user()->sertifikat }}" disabled>
+                        <textarea class="form-control" id="Certification" rows="6"></textarea>
                     </div>
                 </div>
             </div>

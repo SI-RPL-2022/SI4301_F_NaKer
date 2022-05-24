@@ -42,87 +42,94 @@
         </button> -->
 </div>
 <div class="container mb-5">
-<form action="{{ route('pemberi_kerja.update_profil') }}" method="POST" enctype="multipart/form-data">
-        @method('patch')
-        @csrf
-        <input type="hidden" id="id" name="id" value="{{ Auth::guard('pemberi_kerja')->user()->id_pemberikerja }}">
-        <div class="row row-cols-1 row-cols-md-3 g-4" style="padding-top : 0.5cm">
-            <div class="col">
-                <div class="card text-center">
-                    <img src="../gambar/profile.jpg" class="card-img-top" alt="..." style="display: block; margin-left:auto; margin-right: auto; width: 50%; ">
-                    <div class="card-body">
-                        <h5 class="card-text">{{ Auth::guard('pemberi_kerja')->user()->name }}</h5>
-                        <h5 class="card-text">{{ Auth::guard('pemberi_kerja')->user()->email }}</h5>
-                    </div>
-                    <!-- <div class="card-footer">
+    <div class="row row-cols-1 row-cols-md-3 g-4" style="padding-top : 0.5cm">
+        <div class="col">
+            <div class="card text-center">
+                <img src="../gambar/profile.jpg" class="card-img-top" alt="..." style="display: block; margin-left:auto; margin-right: auto; width: 50%; ">
+                <div class="card-body">
+                    <h5 class="card-text">{{ Auth::guard('pemberi_kerja')->user()->name }}</h5>
+                    <h5 class="card-text">{{ Auth::guard('pemberi_kerja')->user()->email }}</h5>
+                </div>
+                <!-- <div class="card-footer">
                     <a href="edit-profile"><button class="button">Edit</button></a>
                 </div> -->
-                    <div class="container" style="text-align: center;">
-                        <a href="profil">
-                            <a href="{{ route('pemberi_kerja.profil') }}" class="btn" style="color:white;font-size:20px;background-color: #CCCCCC; width: 150px; height: 50px;">Cancel</a>
-                        </a>
-                    </div>
-                    <br>
-                    <div class="container" style="text-align: center;">
-                        <a href="profil">
-                            <button type="submit" class="btn" style="color:white;font-size:20px;background-color: #588157; width: 150px; height: 50px;">Save</button>
-                        </a>
-                    </div>
-                    <br>
+                <div class="container" style="text-align: center;">
+                    <a href="">
+                        <button type="submit" class="btn" style="color:white;font-size:20px;background-color: #CCCCCC; width: 150px; height: 50px;">Cancel</button>
+                    </a>
+                </div>
+                <br>
+                <div class="container" style="text-align: center;">
+                    <a href="profil">
+                        <button type="submit" class="btn" style="color:white;font-size:20px;background-color: #588157; width: 150px; height: 50px;">Save</button>
+                    </a>
+                </div>
+                <br>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card">
+                <div class="card-body" style="background-color: #344E41; color: white; border-radius: 5%;">
+                    <form class="row g-3">
+                        <div class="col-12">
+                            <label for="DateOfBirth" class="form-label">Date Of Birth</label>
+                            <div class="form-group">
+                                <span class="fa fa-pencil form-control-icon"></span>
+                                <input type="email" class="form-control" id="DateOfBirth">
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <label for="inputAddress" class="form-label">Address</label>
+                            <div class="form-group">
+                                <span class="fa fa-pencil form-control-icon"></span>
+                                <input type="text" class="form-control" id="inputAddress">
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <label for="inputEmail" class="form-label">Email</label>
+                            <div class="form-group">
+                                <span class="fa fa-pencil form-control-icon"></span>
+                                <input type="text" class="form-control" id="inputEmail">
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <label for="inputLinkedin" class="form-label">Linkedin Name</label>
+                            <div class="form-group">
+                                <span class="fa fa-pencil form-control-icon"></span>
+                                <input type="text" class="form-control" id="inputLinkedin">
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <label for="inputCV" class="form-label">Curriculum Vitae</label>
+                            <input type="file" class="form-control" id="inputCV">
+                        </div>
+                    </form>
                 </div>
             </div>
-            <div class="col">
-                <div class="card">
-                    <div class="card-body" style="background-color: #344E41; color: white; border-radius: 5%;">
-                        <form class="row g-3">
-                            <div class="col-12">
-                                <label for="date_of_birth" class="form-label">Date Of Birth</label>
-                                <div class="form-group">
-                                    <span class="fa fa-pencil form-control-icon"></span>
-                                    <input type="text" class="form-control" name = "date_of_birth" id="date_of_birth" value="{{ Auth::guard('pemberi_kerja')->user()->date_of_birth }}">
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <label for="alamat" class="form-label">Address</label>
-                                <div class="form-group">
-                                    <span class="fa fa-pencil form-control-icon"></span>
-                                    <input type="text" class="form-control" name="alamat" id="alamat" value="{{ Auth::guard('pemberi_kerja')->user()->alamat }}">
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <label for="email" class="form-label">Email</label>
-                                <div class="form-group">
-                                    <span class="fa fa-pencil form-control-icon"></span>
-                                    <input type="email" class="form-control" name="email" id="email" value="{{ Auth::guard('pemberi_kerja')->user()->email }}">
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <label for="no_telepon" class="form-label">No Telepon</label>
-                                <div class="form-group">
-                                    <span class="fa fa-pencil form-control-icon"></span>
-                                    <input type="text" class="form-control" name="no_telepon" id="no_telepon"  value="{{ Auth::guard('pemberi_kerja')->user()->no_telepon }}">
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card col">
-                    <div class="card-body" style="background-color: #344E41; color: white; border-radius: 5%;">
+        </div>
+        <div class="col">
+            <div class="card col">
+                <div class="card-body" style="background-color: #344E41; color: white; border-radius: 5%;">
                     <div class="mb-3">
                         <label for="Experience" class="form-label">Experience</label>
-                        <input type="textarea" class="form-control" name="portofolio" id="portofolio" rows="6" value="{{ Auth::guard('pemberi_kerja')->user()->portofolio }}">
+                        <div class="form-group">
+                            <span class="fa fa-pencil form-control-icon"></span>  
+                            <textarea class="form-control" id="Experience" rows="6"></textarea>
+                        </div>
                     </div>
                     <div class="mb-3">
                         <label for="Certification" class="form-label">Certification</label>
-                        <input type="textarea" class="form-control" name="sertifikat" id="sertifikat" rows="6" value="{{ Auth::guard('pemberi_kerja')->user()->sertifikat }}">
-                    </div>
+                        <div class="form-group">
+                            <span class="fa fa-pencil form-control-icon"></span>  
+                            <textarea class="form-control" id="Certification" rows="6"></textarea>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </form>
+    </div>
+
+
 </div>
 </div>
 @endsection
