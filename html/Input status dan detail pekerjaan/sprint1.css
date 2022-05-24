@@ -1,0 +1,67 @@
+.navbar {
+  background-color: rgb(34, 114, 87);
+}
+
+.status {
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+  /* background-color: rgb(213, 64, 64); */
+}
+
+.card-body {
+  background-color: rgb(207, 221, 206);
+}
+
+.input {
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+  padding-left: 5rem;
+  padding-right: 7rem;
+}
+
+.card-status {
+  margin-left: 6rem;
+}
+
+.tombol {
+  padding-left: 11.7rem;
+}
+
+.btn-edit {
+  width: 13.7rem;
+  background-color: rgb(151, 162, 151);
+  color: #000;
+}
+
+.btn-simpan {
+  width: 13.7rem;
+  background-color: rgb(27, 149, 82);
+}
+
+.btn-detail {
+  margin-left: 17rem;
+  width: 5rem;
+}
+
+.blank-card {
+  background-color: rgb(255, 255, 255);
+  padding-left: 5rem;
+  padding-right: 5rem;
+}
+
+.blank-card-body {
+  margin-left: 7rem;
+  margin-right: 5rem;
+  width: 39rem;
+  height: 18rem;
+  border-radius: 20%;
+}
+
+.btn-apply {
+  margin-left: 40rem;
+  width: 5rem;
+}
+
+.btn-cari {
+  background-color: rgb(206, 217, 217);
+}
