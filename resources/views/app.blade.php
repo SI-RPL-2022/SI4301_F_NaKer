@@ -24,9 +24,11 @@
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                @auth('web')
                 <div class="navbar-nav"> 
-                    <a class="nav-link disabled" href="#">Video Training</a>
+                    <a class="nav-link" href="{{ route('video_training') }}">Video Training</a>
                 </div>
+                @endauth
                 <div class="navbar-nav ms-auto mb-2 mb-lg-0">
                     <li class="nav-item">
                         <a class="nav-link me-3" href="/cari-kerja">Pekerjaan</a>
