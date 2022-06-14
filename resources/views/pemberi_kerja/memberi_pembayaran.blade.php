@@ -11,26 +11,22 @@
                         </div>
                     </form>
                 </div>
+                @if (!$pekerjaan_onboard->isEmpty())
+                @foreach($pekerjaan_onboard as $pekerjaans)
                 <div class="mt-5">
                     <div class="card" style="background-color:#DAD7CD;">
                         <div class="card-body">
-                            <h5 class="card-title">Judul Pekerjaan</h5>
-                            <p class="card-text">Deskripsi Pekerjaan</p>
+                            <h5 class="card-title">{{ $pekerjaans->nama_pekerjaan }}</h5>
+                            <p class="card-text">{{ $pekerjaans->deskripsi_pekerjaan }}</p>
                             <a href="#" class="btn mt-4" style="color:white;font-size:14px;background-color: #588157; ">Selesai</a>
                             <a href="#" class="btn mt-4" style="color:white;font-size:14px;background-color: #3A5A40; ">Cek Pembayaran</a>
                         </div>
                     </div>
-                </div>
-                <div class="mt-5">
-                    <div class="card" style="background-color:#DAD7CD;">
-                        <div class="card-body">
-                            <h5 class="card-title">Judul Pekerjaan</h5>
-                            <p class="card-text">Deskripsi Pekerjaan</p>
-                            <a href="#" class="btn mt-4" style="color:white;font-size:14px;background-color: #588157; ">Selesai</a>
-                            <a href="#" class="btn mt-4" style="color:white;font-size:14px;background-color: #3A5A40; ">Cek Pembayaran</a>
-                        </div>
-                    </div>
-                </div>
+                </div>   
+                @endforeach
+                @else
+                <p class='text-center'>No record found.</p>
+                @endif
             </div>
             <div class="col-sm-8">
                 <h2>Pembayaran</h2>

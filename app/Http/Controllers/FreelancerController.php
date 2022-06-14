@@ -164,14 +164,66 @@ class FreelancerController extends Controller
         $validatedData = $request->validate([
             "id" => "required",
             'email' => "required",
+            'pic'     => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
         $user = Freelancer::find($request->id);
         $user->email = $request->email;
         $user->date_of_birth = $request->date_of_birth;
         $user->alamat = $request->alamat;
-        $user->portofolio = $request->portofolio;
-        $user->sertifikat = $request->sertifikat;
         $user->LinkedinName = $request->LinkedinName;
+        $user->no_telepon = $request->no_telepon;
+
+        $cvName = $request->cvfile;
+        $portoName = $request->portofile;
+        $sertifName = $request->sertifikatfile;
+        $picName = $request->pic;
+
+        if ($picName != "") {
+            if ($user->puc != '' && $user->pic != null) {
+                $path = public_path('gambar/userprofile/');
+                $filePic = $path . $user->pic;
+                unlink($filePic);
+            }
+            $picName = $picName->getClientOriginalName();
+            $user->pic = $picName;
+            $request->pic->move(public_path('gambar/userprofile'), $picName);
+            $save = $user->save();
+        }
+        if ($cvName != "") {
+            if ($user->cv != '' && $user->cv != null) {
+                $path = public_path('dokumen/cv/');
+                $fileCv = $path . $user->cv;
+                unlink($fileCv);
+            }
+            $cvName = $cvName->getClientOriginalName();
+            $user->cv = $cvName;
+            $request->cvfile->move(public_path('dokumen/cv'), $cvName);
+            $save = $user->save();
+        }
+
+        if ($portoName != "") {
+            if ($user->portofolio != '' && $user->portofolio != null) {
+                $path = public_path('dokumen/portofolio/');
+                $filePorto = $path . $user->portofolio;
+                unlink($filePorto);
+            }
+            $portoName = $portoName->getClientOriginalName();
+            $user->portofolio = $portoName;
+            $request->portofile->move(public_path('dokumen/portofolio'), $portoName);
+            $save = $user->save();
+        }
+
+        if ($sertifName != "") {
+            if ($user->sertifikat != '' && $user->sertifikat != null) {
+                $path = public_path('dokumen/sertifikat/');
+                $fileSertif = $path . $user->sertifikat;
+                unlink($fileSertif);
+            }
+            $sertifName = $sertifName->getClientOriginalName();
+            $user->sertifikat = $sertifName;
+            $request->sertifikatfile->move(public_path('dokumen/sertifikat'), $sertifName);
+            $save = $user->save();
+        }
         $user->save();
 
         $request->session()->flash("success", 'Profil Anda sudah berhasil di-edit!');

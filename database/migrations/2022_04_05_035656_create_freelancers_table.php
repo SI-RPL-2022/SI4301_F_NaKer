@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('place_of_birth')->nullable();
             $table->string('LinkedinName')->nullable();
             $table->string('no_telepon')->nullable();
+            $table->string('pic',1000)->nullable();
             $table->string('cv')->nullable();
             $table->string('portofolio')->nullable();
             $table->string('sertifikat')->nullable();

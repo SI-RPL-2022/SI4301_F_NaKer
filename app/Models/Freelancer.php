@@ -28,6 +28,7 @@ class Freelancer extends Authenticatable
         'place_of_birth',
         'LinkedinName',
         'no_telepon',
+        'pic',
         'cv',
         'portofolio',
         'sertifikat',

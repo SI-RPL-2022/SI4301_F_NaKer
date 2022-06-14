@@ -60,14 +60,32 @@
         <div class="row row-cols-1 row-cols-md-3 g-4" style="padding-top : 0.5cm">
             <div class="col">
                 <div class="card text-center">
+                    @if(Auth::guard('web')->user()->pic != '')
+                    <img src="/gambar/userprofile/{{Auth::guard('web')->user()->pic}}" class="card-img-top" alt="..." style="display: block; margin-left:auto; margin-right: auto; width: 50%; ">
+                    <div class="pic">
+                        <div class="mt-1">
+                            <label class="form-label"><strong>Ganti Foto Profile*</strong></label>
+                        </div>
+                        <div class="mb-3">
+                            <input onbeforeeditfocus="return false;" type="file" name="pic" id="pic">
+                        </div>
+                    </div>
+                    @endif
+                    @if(Auth::guard('web')->user()->pic == '')>
                     <img src="../gambar/profile.jpg" class="card-img-top" alt="..." style="display: block; margin-left:auto; margin-right: auto; width: 50%; ">
+                    <div class="pic">
+                        <div class="mt-1">
+                            <label class="form-label"><strong>Foto Profile*</strong> <i class="" style="color:#636363;">belum ada foto profile ter-upload</i> </label>
+                        </div>
+                        <div class="mb-3">
+                            <input onbeforeeditfocus="return false;" type="file" name="pic" id="pic">
+                        </div>
+                    </div>
+                    @endif
                     <div class="card-body">
                         <h5 class="card-text">{{ Auth::guard('web')->user()->name }}</h5>
                         <h5 class="card-text">{{ Auth::guard('web')->user()->email }}</h5>
                     </div>
-                    <!-- <div class="card-footer">
-                    <a href="edit-profile"><button class="button">Edit</button></a>
-                </div> -->
                     <div class="container" style="text-align: center;">
                         <a href="profil">
                             <a href="{{ route('freelancer.profil') }}" class="btn" style="color:white;font-size:20px;background-color: #CCCCCC; width: 150px; height: 50px;">Cancel</a>
@@ -111,12 +129,39 @@
                                 <label for="LinkedinName" class="form-label">Linkedin Name</label>
                                 <div class="form-group">
                                     <span class="fa fa-pencil form-control-icon"></span>
-                                    <input type="text" class="form-control" name="LinkedinName" id="LinkedinName"  value="{{ Auth::guard('web')->user()->LinkedinName }}">
+                                    <input type="text" class="form-control" name="LinkedinName" id="LinkedinName" value="{{ Auth::guard('web')->user()->LinkedinName }}">
                                 </div>
                             </div>
                             <div class="col-md-12">
-                                <label for="inputCV" class="form-label">Curriculum Vitae</label>
-                                <input type="file" class="form-control" id="inputCV">
+                                <label for="no_telepon" class="form-label">No Telepon</label>
+                                <div class="form-group">
+                                    <span class="fa fa-pencil form-control-icon"></span>
+                                    <input type="text" class="form-control" name="no_telepon" id="no_telepon" value="{{ Auth::guard('web')->user()->no_telepon }}">
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                @if(Auth::guard('web')->user()->cv != '')
+                                <div class="cv">
+                                    <div class="mt-1">
+                                        <label class="form-label"><strong>Curriculum Vitae*</strong> <i class="" style="color:#636363;">file ter-upload :{{Auth::guard('web')->user()->cv}}</i></label>
+                                        <embed src="/dokumen/cv/{{Auth::guard('web')->user()->cv}}" style="width:100%;height:250px;" type="application/pdf">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="uploadFile" class="form-label">Ganti File CV</label>
+                                        <input onbeforeeditfocus="return false;" type="file" name="cvfile" id="uploadFile">
+                                    </div>
+                                </div>
+                                @endif
+                                @if(Auth::guard('web')->user()->cv == '')
+                                <div class="cv">
+                                    <div class="mt-1">
+                                        <label class="form-label"><strong>Curriculum Vitae*</strong> <i class="" style="color:#636363;">belum ada cv ter-upload</i> </label>
+                                    </div>
+                                    <div class="mb-3">
+                                        <input onbeforeeditfocus="return false;" type="file" name="cvfile" id="uploadFile">
+                                    </div>
+                                </div>
+                                @endif
                             </div>
                         </form>
                     </div>
@@ -126,12 +171,52 @@
                 <div class="card col">
                     <div class="card-body" style="background-color: #344E41; color: white; border-radius: 5%;">
                     <div class="mb-3">
-                        <label for="Experience" class="form-label">Experience</label>
-                        <input type="textarea" class="form-control" name="portofolio" id="portofolio" rows="6" value="{{ Auth::guard('web')->user()->portofolio }}">
+                        @if(Auth::guard('web')->user()->portofolio != '')
+                        <div class="portofolio">
+                            <div class="mt-1">
+                                <label class="form-label"><strong>Portofolio*</strong> <i class="" style="color:#636363;">file ter-upload : {{Auth::guard('web')->user()->portofolio}}</i> </label>
+                                <embed src="/dokumen/portofolio/{{Auth::guard('web')->user()->portofolio}}" style="width:100%;height:250px;" type="application/pdf">
+                            </div>
+                            <div class="mb-3">
+                                <label for="uploadFile" class="form-label">Ganti File Portofolio</label>
+                                <input onbeforeeditfocus="return false;" type="file" name="cvfile" id="uploadFile">
+                            </div>
+                        </div>
+                        @endif
+                        @if(Auth::guard('web')->user()->portofolio == '')
+                        <div class="portofolio">
+                            <div class="mt-1">
+                                <label class="form-label"><strong>Portofolio*</strong> <i class="" style="color:#636363;">belum ada portofolio ter-upload</i> </label>
+                            </div>
+                            <div class="mb-3">
+                                <input onbeforeeditfocus="return false;" type="file" name="portofile" id="uploadFile">
+                            </div>
+                        </div>
+                        @endif
                     </div>
                     <div class="mb-3">
-                        <label for="Certification" class="form-label">Certification</label>
-                        <input type="textarea" class="form-control" name="sertifikat" id="sertifikat" rows="6" value="{{ Auth::guard('web')->user()->sertifikat }}">
+                        @if(Auth::guard('web')->user()->sertifikat != '')
+                        <div class="sertifikat">
+                            <div class="mt-1">
+                                <label class="form-label"><strong>Sertifikat (optional)</strong> <i class="" style="color:#636363;">file ter-upload : {{Auth::guard('web')->user()->portofolio}}</i> </label>
+                                <embed src="/dokumen/sertifikat/{{Auth::guard('web')->user()->sertifikat}}" style="width:100%;height:250px;" type="application/pdf">
+                            </div>
+                            <div class="mb-5">
+                                <label for="uploadFile" class="form-label">Ganti File Sertifikat</label>
+                                <input onbeforeeditfocus="return false;" type="file" name="cvfile" id="uploadFile">
+                            </div>
+                        </div>
+                        @endif
+                        @if(Auth::guard('web')->user()->sertifikat == '')
+                        <div class="sertifikat">
+                            <div class="mt-1">
+                                <label class="form-label"><strong>Sertifikat (optional)</strong> <i class="" style="color:#636363;">belum ada sertifikat ter-upload</i> </label>
+                            </div>
+                            <div class="mb-5">
+                                <input onbeforeeditfocus="return false;" type="file" name="sertifikatfile" id="uploadFile">
+                            </div>
+                        </div>
+                        @endif
                     </div>
                     </div>
                 </div>

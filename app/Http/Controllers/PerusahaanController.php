@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\pemberiKerja;
 use App\Models\Pekerjaan;
+use App\Models\Pembayaran;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
@@ -25,14 +26,25 @@ class PerusahaanController extends Controller
         $validatedData = $request->validate([
             "id" => "required",
             'email' => "required",
-            'date_of_birth' => 'required',
-            'alamat'=>'required'
         ]);
         $user = pemberiKerja::find($request->id);
         $user->email = $request->email;
         $user->date_of_birth = $request->date_of_birth;
         $user->alamat = $request->alamat;
         $user->no_telepon = $request->no_telepon;
+
+        $picName = $request->pic;
+        if ($picName != "") {
+            if ($user->puc != '' && $user->pic != null) {
+                $path = public_path('gambar/userprofile/');
+                $filePic = $path . $user->pic;
+                unlink($filePic);
+            }
+            $picName = $picName->getClientOriginalName();
+            $user->pic = $picName;
+            $request->pic->move(public_path('gambar/userprofile'), $picName);
+            $save = $user->save();
+        }
         $user->save();
 
         $request->session()->flash("success", 'Profil Anda sudah berhasil di-edit!');
@@ -40,7 +52,11 @@ class PerusahaanController extends Controller
     }
     public function memberi_pembayaran()
     {
-        return view('pemberi_kerja.memberi_pembayaran');
+        // return view('pemberi_kerja.memberi_pembayaran');
+        $pekerjaan_onboard = DB::table("my_jobs")->select('*')
+            ->join('pekerjaans', 'my_jobs.id_pekerjaan', '=', 'pekerjaans.id_pekerjaan')
+            ->get();
+        return view('pemberi_kerja.memberi_pembayaran', compact('pekerjaan_onboard'));
     }
     function create(Request $request){
         $request->validate([

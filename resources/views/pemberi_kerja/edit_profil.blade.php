@@ -57,17 +57,35 @@
         @method('patch')
         @csrf
         <input type="hidden" id="id" name="id" value="{{ Auth::guard('pemberi_kerja')->user()->id_pemberikerja }}">
-        <div class="row row-cols-1 row-cols-md-3 g-4" style="padding-top : 0.5cm">
+        <div class="row" style="padding-top : 0.5cm">
             <div class="col">
                 <div class="card text-center">
+                    @if(Auth::guard('pemberi_kerja')->user()->pic != '')
+                    <img src="/gambar/userprofile/{{Auth::guard('pemberi_kerja')->user()->pic}}" class="card-img-top" alt="..." style="display: block; margin-left:auto; margin-right: auto; width: 50%; ">
+                    <div class="pic">
+                        <div class="mt-1">
+                            <label class="form-label"><strong>Ganti Foto Profile*</strong></label>
+                        </div>
+                        <div class="mb-3">
+                            <input onbeforeeditfocus="return false;" type="file" name="pic" id="pic">
+                        </div>
+                    </div>
+                    @endif
+                    @if(Auth::guard('pemberi_kerja')->user()->pic == '')>
                     <img src="../gambar/profile.jpg" class="card-img-top" alt="..." style="display: block; margin-left:auto; margin-right: auto; width: 50%; ">
+                    <div class="pic">
+                        <div class="mt-1">
+                            <label class="form-label"><strong>Foto Profile*</strong> <i class="" style="color:#636363;">belum ada foto profile ter-upload</i> </label>
+                        </div>
+                        <div class="mb-3">
+                            <input onbeforeeditfocus="return false;" type="file" name="pic" id="pic">
+                        </div>
+                    </div>
+                    @endif
                     <div class="card-body">
                         <h5 class="card-text">{{ Auth::guard('pemberi_kerja')->user()->name }}</h5>
                         <h5 class="card-text">{{ Auth::guard('pemberi_kerja')->user()->email }}</h5>
                     </div>
-                    <!-- <div class="card-footer">
-                    <a href="edit-profile"><button class="button">Edit</button></a>
-                </div> -->
                     <div class="container" style="text-align: center;">
                         <a href="profil">
                             <a href="{{ route('pemberi_kerja.profil') }}" class="btn" style="color:white;font-size:20px;background-color: #CCCCCC; width: 150px; height: 50px;">Cancel</a>
@@ -118,7 +136,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col">
+            <!-- <div class="col">
                 <div class="card col">
                     <div class="card-body" style="background-color: #344E41; color: white; border-radius: 5%;">
                     <div class="mb-3">
@@ -131,7 +149,7 @@
                     </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
     </form>
 </div>

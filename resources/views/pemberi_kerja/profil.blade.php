@@ -22,17 +22,19 @@
         </button> -->
 </div>
 <div class="container mb-5">
-    <div class="row row-cols-1 row-cols-md-3 g-4" style="padding-top : 0.5cm">
+    <div class="row" style="padding-top : 0.5cm">
         <div class="col">
             <div class="card text-center">
+                @if(Auth::guard('pemberi_kerja')->user()->pic != '')
+                <img src="/gambar/userprofile/{{Auth::guard('pemberi_kerja')->user()->pic}}" class="card-img-top" alt="..." style="display: block; margin-left:auto; margin-right: auto; width: 50%; ">
+                @endif
+                @if(Auth::guard('pemberi_kerja')->user()->pic == '')>
                 <img src="../gambar/profile.jpg" class="card-img-top" alt="..." style="display: block; margin-left:auto; margin-right: auto; width: 50%; ">
+                @endif
                 <div class="card-body">
                     <h5 class="card-text">{{ Auth::guard('pemberi_kerja')->user()->name }}</h5>
                     <h5 class="card-text">{{ Auth::guard('pemberi_kerja')->user()->email }}</h5>
                 </div>
-                <!-- <div class="card-footer">
-                    <a href="edit-profile"><button class="button">Edit</button></a>
-                </div> -->
                 <div class="container mb-4" style="text-align: center;">
                     <a href="">
                         <a href="{{ route('pemberi_kerja.edit_profil') }}" class="btn" style="color:white;font-size:20px;background-color: #588157; width: 150px; height: 50px;">Edit</a>
@@ -64,7 +66,7 @@
                 </div>
             </div>
         </div>
-        <div class="col">
+        <!-- <div class="col">
             <div class="card col">
                 <div class="card-body" style="background-color: #344E41; color: white; border-radius: 5%;">
                     <div class="mb-3">
@@ -77,7 +79,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
     </div>
 
 

@@ -27,6 +27,7 @@ class pemberiKerja extends Authenticatable
         'date_of_birth',
         'place_of_birth',
         'no_telepon',
+        'pic',
     ];
 
     /**
