@@ -84,6 +84,8 @@ Route::prefix('pemberi_kerja')->name('pemberi_kerja.')->group(function(){
         Route::get('/profil', [PerusahaanController::class, 'profil'])->name('profil');
         Route::get('/edit-profil', [PerusahaanController::class, 'edit_profil'])->name('edit_profil');
         Route::get('/memberi_pembayaran', [PerusahaanController::class, 'memberi_pembayaran'])->name('memberi_pembayaran');
+        Route::get('/detail_pembayaran/{id}', [PerusahaanController::class, 'detail_pembayaran'])->name('detail_pembayaran');
+        Route::post('/create_pembayaran', [PerusahaanController::class, 'create_pembayaran'])->name('create_pembayaran');
         Route::patch('/update_profil', [PerusahaanController::class, 'update_profil'])->name('update_profil');
         Route::view('/tambah-pekerjaan', 'pemberi_kerja.tambah_kerja')->name('tambah_kerja');
         Route::get('/pekerjaan', [PerusahaanController::class, 'pekerjaan'])->name('pekerjaan');
