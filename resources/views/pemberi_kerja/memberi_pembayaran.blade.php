@@ -1,42 +1,51 @@
 @extends('pemberi_kerja.app')
 @section('content')
-<div class="container mt-5">
+@if (Session::get('fail'))
+    <div class="alert alert-danger alert-dismissible fade show">
+        {{ Session::get('fail') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+@endif
+@if (Session::get('success'))
+    <div class="alert alert-success alert-dismissible fade show">
+        <p>{{ Session::get('success') }} <i class="fa-solid fa-circle-check"></i></p>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+@endif
+<div class="container mt-4">
     <div class="row">
         <div class="row">
-            <div class="col-4">
-                <div>
-                    <form action="" method="GET">
-                        <div class="input-group">
-                            <input type="text" id="form1" class="form-control" placeholder="Search" name="pencarian" style="background-color: #E5E5E5"/>
-                        </div>
-                    </form>
+            <div class="col-4 mb-4">
+            </div>
+            <div class="col-8 mb-4">
+                <div class="row">
+                    <div class="col">   
+                        <h2 class="mb-1">Pembayaran</h2>
+                    </div>
+                    <div class="col">   
+                        <a href="{{ route('pemberi_kerja.riwayat_pembayaran')}}" class="btn" style="color:white;background-color: #344E41;"><h5>Riwayat Pembayaran <i class="fa fa-history" aria-hidden="true"></i></h5></a>
+                    </div>
                 </div>
+            </div>
+            <div class="col-4 mb-4">
                 @if (!$pekerjaan_onboard->isEmpty())
                 @foreach($pekerjaan_onboard as $pekerjaans)
-                <div class="mt-5">
+                <div class="mb-3">
                     <div class="card" style="background-color:#DAD7CD;">
                         <div class="card-body">
                             <h5 class="card-title"><strong>{{ $pekerjaans->nama_pekerjaan }}</strong> ({{ $pekerjaans->name }})</h5>
                             <p class="card-text">{{ $pekerjaans->deskripsi_pekerjaan }}</p>
-                            <a href="#" class="btn mt-4" style="color:white;font-size:14px;background-color: #588157; ">Selesai</a>
-                            <a href="{{ route('pemberi_kerja.detail_pembayaran', ['id'=>$pekerjaans->id_myjob]) }}" class="btn mt-4" style="color:white;font-size:14px;background-color: #3A5A40; ">Cek Pembayaran</a>
+                            <a href="#" class="btn mt-4" style="color:white;font-size:14px;background-color: #588157; ">Belum Selesai</a>
+                            <a href="{{ route('pemberi_kerja.detail_pembayaran', ['id'=>$pekerjaans->id_myjob]) }}" class="btn mt-4" style="color:white;font-size:14px;background-color: #344E41; ">Cek Pembayaran</a>
                         </div>
                     </div>
                 </div>   
                 @endforeach
                 @else
-                <p class='text-center'>No record found.</p>
+                <h2 class='text-center'>No record found</h2>
                 @endif
             </div>
             <div class="col-8">
-                <div class="row">
-                    <div class="col">   
-                        <h2 class="mb-5">Pembayaran</h2>
-                    </div>
-                    <div class="col">   
-                        <a href="" class="btn" style="color:white;background-color: #344E41;"><h5>Riwayat Pembayaran <i class="fa fa-history" aria-hidden="true"></i></h5></a>
-                    </div>
-                </div>
                 <div class="row">
                 <div class="card" style="background-color:#DAD7CD;">
                     <div class="card-body">
@@ -44,8 +53,9 @@
                             @if(Route::is('pemberi_kerja.memberi_pembayaran'))
                             <h5 class="card-title mb-4 text-center">Pilih pembayaran yang ingin dilihat</h5>
                             @endif
+                            @if(!$pekerjaan_onboard->isEmpty()) 
                             @if(Route::is('pemberi_kerja.detail_pembayaran', ['id'=>$pekerjaans->id_myjob]))
-                            @foreach($detail_bayar as $detail_bayars)
+                            @foreach($detail_bayar as $detail_bayars)   
                                 @if (Session::get('fail'))
                                     <div class="alert alert-error alert-dismissible fade show" role="alert">
                                         {{ Session::get('fail') }}
@@ -65,6 +75,14 @@
                                     </div>
                                     <div class="col">
                                         <p style="background:#A3B18A;border-radius:10px;padding:10px;">{{ $detail_bayars->deskripsi_pekerjaan }}</p>
+                                    </div>
+                                </div>
+                                <div class="row g-5 align-items-center">
+                                    <div class="col-4">
+                                        <p>Kategori Pekerjaan : </p>
+                                    </div>
+                                    <div class="col">
+                                        <p style="background:#A3B18A;border-radius:10px;padding:10px;">{{ $detail_bayars->kategori }}</p>
                                     </div>
                                 </div>
                                 <div class="row g-5 align-items-center">
@@ -89,13 +107,6 @@
                                     </div>
                                     <div class="col">
                                         <p style="background:#A3B18A;border-radius:10px;padding:10px;">Belum Selesai</p>
-                                    </div>
-                                </div>
-                                <div class="row g-5 align-items-center mt-2">
-                                    <div class="col-4">
-                                    </div>
-                                    <div class="col">
-                                        <label style="background:#588157;border-radius:10px;padding:10px;width:100%;color:white;padding:10px;"><i class="fa-regular fa-file-lines"></i> Bukti Bayar</label>
                                     </div>
                                 </div>
                                 <div class="row g-5 align-items-center mb-3 text-center">
@@ -151,10 +162,10 @@
                                 </div>
                                 @endforeach
                             @endif
+                            @endif
                         </div>
                     </div>
                 </div>
-            </div>
             </div>
         </div>
     </div>

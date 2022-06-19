@@ -41,6 +41,9 @@ Route::prefix('freelancer')->name('freelancer.')->group(function(){
         Route::get('/profil', [FreelancerController::class, 'profil'])->name('profil');
         Route::get('/edit-profil', [FreelancerController::class, 'edit_profil'])->name('edit_profil');
         Route::patch('/update_profil', [FreelancerController::class, 'update_profil'])->name('update_profil');
+        Route::get('/status_seleksi', [FreelancerController::class, 'status_seleksi'])->name('status_seleksi');
+        Route::get('/detail_seleksi/{id}', [FreelancerController::class, 'detail_seleksi'])->name('detail_seleksi');
+        Route::get('/status_seleksi/delete/{id}', [FreelancerController::class, 'delete_seleksi'])->name('delete_seleksi');
         Route::get('/pembayaran', [FreelancerController::class, 'pembayaran'])->name('pembayaran');
         Route::get('/check-pembayaran/{id}', [FreelancerController::class, 'check_pembayaran'])->name('check_pembayaran');
         Route::get('/selesai-bayar/{id}', [FreelancerController::class, 'selesai_bayar'])->name('selesai_bayar');
@@ -86,6 +89,11 @@ Route::prefix('pemberi_kerja')->name('pemberi_kerja.')->group(function(){
         Route::get('/memberi_pembayaran', [PerusahaanController::class, 'memberi_pembayaran'])->name('memberi_pembayaran');
         Route::get('/detail_pembayaran/{id}', [PerusahaanController::class, 'detail_pembayaran'])->name('detail_pembayaran');
         Route::post('/create_pembayaran', [PerusahaanController::class, 'create_pembayaran'])->name('create_pembayaran');
+        Route::get('/riwayat_pembayaran', [PerusahaanController::class, 'riwayat_pembayaran'])->name('riwayat_pembayaran');
+        Route::get('/detail_riwayat/{id}', [PerusahaanController::class, 'detail_riwayat'])->name('detail_riwayat');
+        Route::get('/status_seleksi', [PerusahaanController::class, 'status_seleksi'])->name('status_seleksi');
+        Route::get('/detail_seleksi/{id}', [PerusahaanController::class, 'detail_seleksi'])->name('detail_seleksi');
+        Route::post('/create_seleksi', [PerusahaanController::class, 'create_seleksi'])->name('create_seleksi');
         Route::patch('/update_profil', [PerusahaanController::class, 'update_profil'])->name('update_profil');
         Route::view('/tambah-pekerjaan', 'pemberi_kerja.tambah_kerja')->name('tambah_kerja');
         Route::get('/pekerjaan', [PerusahaanController::class, 'pekerjaan'])->name('pekerjaan');

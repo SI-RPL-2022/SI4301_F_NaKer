@@ -3,7 +3,6 @@
 <div class="container mt-4 ">
     <div class="row">
         <div class="col-4 mb-4">
-            
         </div>
         <div class="col-8 mb-4">
             <h2 class="mb-4">Pembayaran</h2>
@@ -48,6 +47,7 @@
                             @if(Route::is('freelancer.pembayaran'))
                             <h5 class="card-title mb-4 text-center">Pilih pembayaran yang ingin dilihat</h5>
                             @endif
+                            @if(!$pekerjaan_onboard->isEmpty())
                             @if(Route::is('freelancer.check_pembayaran', ['id'=>$pekerjaans->id]))
                                 @foreach($detail_bayar as $detail_bayars)
                                 <h5 class="card-title mb-4 text-center">{{ $detail_bayars->nama_pekerjaan }}</h5>
@@ -97,6 +97,7 @@
                                     </div>
                                 </div>
                                 @endforeach
+                            @endif
                             @endif
                         </div>
                     </div>
