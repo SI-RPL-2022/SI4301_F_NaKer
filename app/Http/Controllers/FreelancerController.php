@@ -7,6 +7,7 @@ use App\Models\Pekerjaan;
 use App\Models\Freelancer;
 use App\Models\myJob;
 use App\Models\Pembayaran;
+use App\Models\log;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
@@ -25,7 +26,18 @@ class FreelancerController extends Controller
         $creds = $request->only('email', 'password');
 
         if (Auth::guard('web')->attempt($creds)) {
+            
+            $index = Auth::guard('web')->user()->id_freelancer;
+            $log = new log();
+            $log->user_id = $index;
+            $log->user_type = "Freelancer";
+            $log->type = "Berhasil";
+            $log->activity = "Login";
+            $log->page = "Login Page";
+            $log->save();
+            
             return redirect()->route('home');
+            
         } else {
             return redirect()->route('freelancer.login')->with('fail', 'Incorrect credentials');
         }
@@ -86,8 +98,22 @@ class FreelancerController extends Controller
 
 
         if ($saveJob) {
+            $log = new log();
+            $log->user_id = $index;
+            $log->user_type = "Freelancer";
+            $log->type = "Berhasil";
+            $log->activity = "Apply Pekerjaan";
+            $log->page = "Pekerjaan Page";
+            $log->save();
             return redirect()->route('cari_kerja')->with('success', 'Lamaran kerja berhasil dibuat!');
         } else {
+            $log = new log();
+            $log->user_id = $index;
+            $log->user_type = "Freelancer";
+            $log->type = "Gagal";
+            $log->activity = "Apply Pekerjaan";
+            $log->page = "Pekerjaan Page";
+            $log->save();
             return redirect()->back()->with('fail', 'Gagal melamar kerja');
         }
 
@@ -137,13 +163,28 @@ class FreelancerController extends Controller
 
     function selesai_bayar($id)
     {
+        $index = Auth::guard('web')->user()->id_freelancer;
         $status_bayar = Pembayaran::find($id);
         $status_bayar->status_pembayaran = "Sudah Bayar";
         $save = $status_bayar->save();
 
         if ($save) {
+            $log = new log();
+            $log->user_id = $index;
+            $log->user_type = "Freelancer";
+            $log->type = "Berhasil";
+            $log->activity = "Menyelesaikan pembayaran";
+            $log->page = "Pembayaran Page";
+            $log->save();
             return redirect()->route('freelancer.pembayaran')->with('success', 'Pembayaran selesai');
         } else {
+            $log = new log();
+            $log->user_id = $index;
+            $log->user_type = "Freelancer";
+            $log->type = "Gagal";
+            $log->activity = "Menyelesaikan pembayaran";
+            $log->page = "Pembayaran Page";
+            $log->save();
             return redirect()->back()->with('fail', 'Gagal menyelesaikan pembayaran');
         }
     }
@@ -237,7 +278,16 @@ class FreelancerController extends Controller
     }
     function logout()
     {
+        $index = Auth::guard('web')->user()->id_freelancer;
+        $log = new log();
+        $log->user_id = $index;
+        $log->user_type = "Freelancer";
+        $log->type = "Berhasil";
+        $log->activity = "Logout";
+        $log->page = "Dropdown";
+        $log->save();
         Auth::guard('web')->logout();
+        
         return redirect('/');
     }
 }

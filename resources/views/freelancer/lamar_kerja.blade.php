@@ -122,7 +122,7 @@
                                 </div>
                                 <div class="mb-3">
                                     <label for="uploadFile" class="form-label">Ganti File</label>
-                                    <input onbeforeeditfocus="return false;" type="file" name="cvfile" id="uploadFile">
+                                    <input onbeforeeditfocus="return false;" type="file" name="portofile" id="uploadFile">
                                 </div>
                             </div>
                             @endif

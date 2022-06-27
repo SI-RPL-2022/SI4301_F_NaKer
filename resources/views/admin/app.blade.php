@@ -38,7 +38,7 @@
                                 <a class="nav-link me-3" href="{{ route('admin.video_training') }}">Video Training</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link me-3" href="#">Report</a>
+                                <a class="nav-link me-3" href="{{ route('admin.report') }}">Report</a>
                             </li>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>

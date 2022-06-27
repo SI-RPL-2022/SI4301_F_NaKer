@@ -61,6 +61,7 @@ Route::prefix('admin')->name('admin.')->group(function(){
         Route::view('/dashboard', 'admin.dashboard')->name('dashboard');
         Route::get('/video-training', [AdminController::class, 'video_training'])->name('video_training');
         Route::view('/upload-video', 'admin.upload_video')->name('upload_video');
+        Route::get('/report', [AdminController::class, 'report'])->name('report');
         Route::post('/video-training/create', [AdminController::class, 'create_video'])->name('create_video');
         Route::get('/video-training/delete/{id}', [AdminController::class, 'delete_video'])->name('delete_video');
         Route::post('/video-training/edit/{id}', [AdminController::class, 'edit_video'])->name('edit_video');

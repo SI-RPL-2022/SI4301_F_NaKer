@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Admin;
+use App\Models\log;
 use App\Models\videoTraining;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class AdminController extends Controller
 {
@@ -98,5 +100,19 @@ class AdminController extends Controller
     function logout(){
         Auth::guard('admin')->logout();
         return redirect('/');
+    }
+    function report(){
+        $logf=DB::table('logs')
+                ->select('*')
+                ->where('user_type', 'Freelancer')
+                ->join('freelancers', 'logs.user_id','=', 'freelancers.id_freelancer')
+                ->get();
+        $logp=DB::table('logs')
+                ->select('*')
+                ->where('user_type', 'Pemberi Kerja')
+                ->join('pemberi_kerjas', 'logs.user_id','=', 'pemberi_kerjas.id_pemberikerja')
+                ->get();
+        
+        return view('admin.report', compact('logf', 'logp'));
     }
 }

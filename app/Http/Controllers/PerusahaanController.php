@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\pemberiKerja;
 use App\Models\Pekerjaan;
+use App\Models\log;
 use App\Models\Pembayaran;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -91,6 +92,14 @@ class PerusahaanController extends Controller
         $creds = $request->only('email', 'password');
 
         if( Auth::guard('pemberi_kerja')->attempt($creds) ){
+            $index = Auth::guard('pemberi_kerja')->user()->id_pemberikerja;
+            $log = new log();
+            $log->user_id = $index;
+            $log->user_type = "Pemberi Kerja";
+            $log->type = "Berhasil";
+            $log->activity = "Login";
+            $log->page = "Login Page";
+            $log->save();
             return redirect()->route('pemberi_kerja.dashboard');
         }else{
             return redirect()->route('pemberi_kerja.login')->with('fail','Incorrect credentials');
@@ -119,8 +128,24 @@ class PerusahaanController extends Controller
         $pekerjaan->id_pemberikerja = Auth::guard('pemberi_kerja')->user()->id_pemberikerja;
         $save = $pekerjaan->save();
         if( $save ){
+            $index = Auth::guard('pemberi_kerja')->user()->id_pemberikerja;
+            $log = new log();
+            $log->user_id = $index;
+            $log->user_type = "Pemberi Kerja";
+            $log->type = "Berhasil";
+            $log->activity = "Tambah Pekerjaan";
+            $log->page = "Tambah Pekerjaan Page";
+            $log->save();
             return redirect()->back()->with('success', 'Berhasil tambah pekerjaan');
        }else {
+            $index = Auth::guard('pemberi_kerja')->user()->id_pemberikerja;
+            $log = new log();
+            $log->user_id = $index;
+            $log->user_type = "Pemberi Kerja";
+            $log->type = "Gagal";
+            $log->activity = "Tambah Pekerjaan";
+            $log->page = "Tambah Pekerjaan Page";
+            $log->save();
             return redirect()->back()->with('fail', 'Gagal tambah pekerjaan');
        }
     }
@@ -199,6 +224,14 @@ class PerusahaanController extends Controller
         $kerja=Pekerjaan::find($id);
         $delete=$kerja->delete();
         if( $delete ){
+            $index = Auth::guard('pemberi_kerja')->user()->id_pemberikerja;
+            $log = new log();
+            $log->user_id = $index;
+            $log->user_type = "Pemberi Kerja";
+            $log->type = "Berhasil";
+            $log->activity = "Hapus Pekerjaan";
+            $log->page = "Pekerjaan Page";
+            $log->save();
             return redirect()->back()->with('success', 'Berhasil hapus pekerjaan');
        }else {
             return redirect()->back()->with('fail', 'Gagal hapus pekerjaan');
