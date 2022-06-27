@@ -150,7 +150,7 @@ class PerusahaanController extends Controller
             ->join('pekerjaans', 'my_jobs.id_pekerjaan', '=', 'pekerjaans.id_pekerjaan')
             ->join('freelancers','my_jobs.id_freelancer', '=', 'freelancers.id_freelancer')
             ->where('pekerjaans.id_pemberikerja', auth::guard('pemberi_kerja')->user()->id_pemberikerja)
-            ->where('my_jobs.status', 'Tahap Seleksi')
+            ->whereNot('my_jobs.status', 'Selesai')
             ->get();
         return view('pemberi_kerja.status_seleksi', compact('status_onboard'));
     }
@@ -160,14 +160,14 @@ class PerusahaanController extends Controller
             ->join('pekerjaans', 'my_jobs.id_pekerjaan', '=', 'pekerjaans.id_pekerjaan')
             ->join('freelancers','my_jobs.id_freelancer', '=', 'freelancers.id_freelancer')
             ->where('pekerjaans.id_pemberikerja', auth::guard('pemberi_kerja')->user()->id_pemberikerja)
-            ->where('my_jobs.status', 'Tahap Seleksi')
+            ->whereNot('my_jobs.status', 'Selesai')
             ->get();
         $detailSeleksi_onboard = DB::table("my_jobs")->select('*')
             ->join('pekerjaans', 'my_jobs.id_pekerjaan', '=', 'pekerjaans.id_pekerjaan')
             ->join('freelancers','my_jobs.id_freelancer', '=', 'freelancers.id_freelancer')
             ->where('pekerjaans.id_pemberikerja', auth::guard('pemberi_kerja')->user()->id_pemberikerja)
             ->where('my_jobs.id_myjob', $id)
-            ->where('my_jobs.status', 'Tahap Seleksi')
+            ->whereNot('my_jobs.status', 'Selesai')
             ->get();
         return view('pemberi_kerja.status_seleksi', compact('status_onboard','detailSeleksi_onboard'));
     }

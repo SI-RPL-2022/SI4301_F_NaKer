@@ -122,8 +122,9 @@
                                                     <div class="mb-3">
                                                         <label for="status" class="form-label">Status Seleksi</label>
                                                         <select class="form-select" aria-label="Default select example" id="status" name="status">
-                                                            <option name="status" value="Terpilih">Terima Freelancer</option>
-                                                            <option name="status" value="Tertolak">Tolak Freelancer</option>
+                                                            <option name="status" value="Tahap Seleksi" {{($detail_seleksi->status == 'Tahap Seleksi') ? "selected":'' }}>Seleksi Freelancer</option>
+                                                            <option name="status" value="Terpilih" {{($detail_seleksi->status == 'Terpilih') ? "selected":'' }}>Pilih Freelancer</option>
+                                                            <option name="status" value="Tertolak" {{($detail_seleksi->status == 'Tertolak') ? "selected":'' }}>Tolak Freelancer</option>
                                                         </select>
                                                     </div>
                                                 </div>
