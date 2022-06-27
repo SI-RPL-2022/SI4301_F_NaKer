@@ -7,6 +7,7 @@ use App\Models\pemberiKerja;
 use App\Models\Pekerjaan;
 use App\Models\log;
 use App\Models\Pembayaran;
+use App\Models\myJob;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
@@ -36,7 +37,7 @@ class PerusahaanController extends Controller
 
         $picName = $request->pic;
         if ($picName != "") {
-            if ($user->puc != '' && $user->pic != null) {
+            if ($user->pic != '' && $user->pic != null) {
                 $path = public_path('gambar/userprofile/');
                 $filePic = $path . $user->pic;
                 unlink($filePic);
@@ -51,13 +52,139 @@ class PerusahaanController extends Controller
         $request->session()->flash("success", 'Profil Anda sudah berhasil di-edit!');
         return redirect()->back()->with("success", 'Profil Anda sudah berhasil di-edit!');
     }
-    public function memberi_pembayaran()
+    //Halaman Pembayaran
+    function memberi_pembayaran()
     {
-        // return view('pemberi_kerja.memberi_pembayaran');
         $pekerjaan_onboard = DB::table("my_jobs")->select('*')
             ->join('pekerjaans', 'my_jobs.id_pekerjaan', '=', 'pekerjaans.id_pekerjaan')
+            ->join('freelancers','my_jobs.id_freelancer', '=', 'freelancers.id_freelancer')
+            ->where('pekerjaans.id_pemberikerja', auth::guard('pemberi_kerja')->user()->id_pemberikerja)
+            ->where('my_jobs.status', 'Terpilih')
             ->get();
         return view('pemberi_kerja.memberi_pembayaran', compact('pekerjaan_onboard'));
+    }
+    //Memilih pembayaran
+    function detail_pembayaran($id)
+    {
+        $pekerjaan_onboard = DB::table("my_jobs")->select('*')
+            ->join('pekerjaans', 'my_jobs.id_pekerjaan', '=', 'pekerjaans.id_pekerjaan')
+            ->join('freelancers','my_jobs.id_freelancer', '=', 'freelancers.id_freelancer')
+            ->where('pekerjaans.id_pemberikerja', auth::guard('pemberi_kerja')->user()->id_pemberikerja)
+            ->where('my_jobs.status', 'Terpilih')
+            ->get();
+        $detail_bayar = DB::table("my_jobs")->select('*')
+            ->join('pekerjaans', 'my_jobs.id_pekerjaan', '=', 'pekerjaans.id_pekerjaan')
+            ->join('freelancers','my_jobs.id_freelancer', '=', 'freelancers.id_freelancer')
+            ->where('pekerjaans.id_pemberikerja', auth::guard('pemberi_kerja')->user()->id_pemberikerja)
+            ->where('my_jobs.id_myjob', $id)
+            ->where('my_jobs.status', 'Terpilih')
+            ->get();
+        return view('pemberi_kerja.memberi_pembayaran', compact('pekerjaan_onboard', 'detail_bayar'));
+    }
+    //Upload Pembayaran
+    function create_pembayaran(Request $request){
+        $request->validate([
+            'id_myjob'=>'required',
+            'bukti_pembayaran'=> 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+        $myjob = myJob::find($request->id_myjob);
+        $myjob->status = "Selesai";
+        $myjob->save();
+
+        $pembayaran = new Pembayaran();
+        $pembayaran->id_myjob = $request->id_myjob;
+        $pembayaran->jumlah_pembayaran = $request->jumlah_pembayaran;
+        $pembayaran->status_pembayaran = "Belum Bayar";
+
+        $buktiPembayaran = $request->bukti_pembayaran;
+        if ($buktiPembayaran != "") {
+            if ($pembayaran->puc != '' && $pembayaran->bukti_pembayaran != null) {
+                $path = public_path('gambar/buktiPembayaran/');
+                $filePic = $path . $pembayaran->bukti_pembayaran;
+                unlink($filePic);
+            }
+            $buktiPembayaran = $buktiPembayaran->getClientOriginalName();
+            $pembayaran->bukti_pembayaran = $buktiPembayaran;
+            $request->bukti_pembayaran->move(public_path('gambar/buktiPembayaran'), $buktiPembayaran);
+            $save = $pembayaran->save();
+        }
+        $save = $pembayaran->save();
+        if( $save ){
+            return redirect()->back()->with('success', 'Berhasil melakukan pembayaran');
+       }else {
+            return redirect()->back()->with('fail', 'Gagal melakukan pembayaran');
+       }
+    }
+    //Riwayat Pembayaran
+    function riwayat_pembayaran(){
+        $riwayat_onboard = DB::table("pembayarans")->select('*')
+            ->join('my_jobs','pembayarans.id_myjob', '=', 'my_jobs.id_myjob')
+            ->join('pekerjaans', 'my_jobs.id_pekerjaan', '=', 'pekerjaans.id_pekerjaan')
+            ->where('pekerjaans.id_pemberikerja', auth::guard('pemberi_kerja')->user()->id_pemberikerja)
+            ->where('my_jobs.status', 'Selesai')
+            ->get();
+        return view('pemberi_kerja.riwayat_pembayaran', compact('riwayat_onboard'));
+    }
+    //Detail Riwayat Pembayaran
+    function detail_riwayat($id){
+        $riwayat_onboard = DB::table("pembayarans")->select('*')
+            ->join('my_jobs','pembayarans.id_myjob', '=', 'my_jobs.id_myjob')
+            ->join('pekerjaans', 'my_jobs.id_pekerjaan', '=', 'pekerjaans.id_pekerjaan')
+            ->where('pekerjaans.id_pemberikerja', auth::guard('pemberi_kerja')->user()->id_pemberikerja)
+            ->where('my_jobs.status', 'Selesai')
+            ->get();
+        $detailRiwayat_onboard = DB::table("pembayarans")->select('*')
+            ->join('my_jobs','pembayarans.id_myjob', '=', 'my_jobs.id_myjob')
+            ->join('pekerjaans', 'my_jobs.id_pekerjaan', '=', 'pekerjaans.id_pekerjaan')
+            ->join('freelancers','my_jobs.id_freelancer', '=', 'freelancers.id_freelancer')
+            ->where('pekerjaans.id_pemberikerja', auth::guard('pemberi_kerja')->user()->id_pemberikerja)
+            ->where('pembayarans.id', $id)
+            ->where('my_jobs.status', 'Selesai')
+            ->get();
+        return view('pemberi_kerja.riwayat_pembayaran', compact('riwayat_onboard','detailRiwayat_onboard'));
+    }
+    //Status Seleksi
+    function status_seleksi(){
+        $status_onboard = DB::table("my_jobs")->select('*')
+            ->join('pekerjaans', 'my_jobs.id_pekerjaan', '=', 'pekerjaans.id_pekerjaan')
+            ->join('freelancers','my_jobs.id_freelancer', '=', 'freelancers.id_freelancer')
+            ->where('pekerjaans.id_pemberikerja', auth::guard('pemberi_kerja')->user()->id_pemberikerja)
+            ->where('my_jobs.status', 'Tahap Seleksi')
+            ->get();
+        return view('pemberi_kerja.status_seleksi', compact('status_onboard'));
+    }
+    //detail status Seleksi
+    function detail_seleksi($id){
+        $status_onboard = DB::table("my_jobs")->select('*')
+            ->join('pekerjaans', 'my_jobs.id_pekerjaan', '=', 'pekerjaans.id_pekerjaan')
+            ->join('freelancers','my_jobs.id_freelancer', '=', 'freelancers.id_freelancer')
+            ->where('pekerjaans.id_pemberikerja', auth::guard('pemberi_kerja')->user()->id_pemberikerja)
+            ->where('my_jobs.status', 'Tahap Seleksi')
+            ->get();
+        $detailSeleksi_onboard = DB::table("my_jobs")->select('*')
+            ->join('pekerjaans', 'my_jobs.id_pekerjaan', '=', 'pekerjaans.id_pekerjaan')
+            ->join('freelancers','my_jobs.id_freelancer', '=', 'freelancers.id_freelancer')
+            ->where('pekerjaans.id_pemberikerja', auth::guard('pemberi_kerja')->user()->id_pemberikerja)
+            ->where('my_jobs.id_myjob', $id)
+            ->where('my_jobs.status', 'Tahap Seleksi')
+            ->get();
+        return view('pemberi_kerja.status_seleksi', compact('status_onboard','detailSeleksi_onboard'));
+    }
+    //change status seleksi (my_jobs)
+    Function create_seleksi(Request $request){
+        $request->validate([
+            'id_myjob'=>'required',
+        ]);
+
+        $myjob = myJob::find($request->id_myjob);
+        $myjob->status = $request->status ;
+        $save = $myjob->save();
+        if( $save ){
+            return redirect()->back()->with('success', 'Berhasil mengubah status freelancer');
+       }else {
+            return redirect()->back()->with('fail', 'Gagal mengubah status freelancer');
+       }
     }
     function create(Request $request){
         $request->validate([

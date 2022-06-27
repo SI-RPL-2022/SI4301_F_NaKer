@@ -62,7 +62,7 @@
                             @endif
                             @else
                             <li class="nav-item">
-                                <a class="nav-link me-3 disabled" href="#">Status Seleksi</a>
+                                <a class="nav-link me-3" href="{{ route('freelancer.status_seleksi') }}">Status Seleksi</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link me-3" href="{{ route('freelancer.pembayaran') }}">Pembayaran</a>

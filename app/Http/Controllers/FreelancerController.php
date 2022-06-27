@@ -42,7 +42,42 @@ class FreelancerController extends Controller
             return redirect()->route('freelancer.login')->with('fail', 'Incorrect credentials');
         }
     }
+    function status_seleksi(){
+        $status_onboard = DB::table("my_jobs")->select('*')
+            ->join('pekerjaans', 'my_jobs.id_pekerjaan', '=', 'pekerjaans.id_pekerjaan')
+            ->join('freelancers','my_jobs.id_freelancer', '=', 'freelancers.id_freelancer')
+            ->join('pemberi_kerjas', 'pekerjaans.id_pemberikerja', '=', 'pemberi_kerjas.id_pemberikerja')
+            ->where('my_jobs.id_freelancer', auth::guard('web')->user()->id_freelancer)
+            ->get();
+        return view('freelancer.status_seleksi', compact('status_onboard'));
+    }
+    function detail_seleksi($id){
+        $status_onboard = DB::table("my_jobs")->select('*')
+            ->join('pekerjaans', 'my_jobs.id_pekerjaan', '=', 'pekerjaans.id_pekerjaan')
+            ->join('freelancers','my_jobs.id_freelancer', '=', 'freelancers.id_freelancer')
+            ->join('pemberi_kerjas', 'pekerjaans.id_pemberikerja', '=', 'pemberi_kerjas.id_pemberikerja')
+            ->where('my_jobs.id_freelancer', auth::guard('web')->user()->id_freelancer)
+            ->get();
+        $detail_onboard = DB::table("my_jobs")->select('*')
+            ->join('pekerjaans', 'my_jobs.id_pekerjaan', '=', 'pekerjaans.id_pekerjaan')
+            ->join('freelancers','my_jobs.id_freelancer', '=', 'freelancers.id_freelancer')
+            ->join('pemberi_kerjas', 'pekerjaans.id_pemberikerja', '=', 'pemberi_kerjas.id_pemberikerja')
+            ->where('my_jobs.id_freelancer', auth::guard('web')->user()->id_freelancer)
+            ->where('my_jobs.id_myjob', $id)
+            ->get();
+        return view('freelancer.status_seleksi', compact('status_onboard','detail_onboard'));
+    }
+    function delete_seleksi($id)
+    {
+        $myJob=myJob::find($id);
+        $delete=$myJob->delete();
+        if( $delete ){
+            return redirect()->back()->with('success', 'Berhasil hapus daftar seleksi');
+       }else {
+            return redirect()->back()->with('fail', 'Gagal hapus daftar seleksi');
+       }
 
+    }
     function applied($id, Request $request)
     {
         $index = Auth::guard('web')->user()->id_freelancer;
