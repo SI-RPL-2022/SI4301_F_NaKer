@@ -85,7 +85,7 @@ class PerusahaanController extends Controller
     function create_pembayaran(Request $request){
         $request->validate([
             'id_myjob'=>'required',
-            'bukti_pembayaran'=> 'image|mimes:pdf,jpeg,png,jpg,gif,svg|max:2048',
+            'bukti_pembayaran'=> 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
         $myjob = myJob::find($request->id_myjob);

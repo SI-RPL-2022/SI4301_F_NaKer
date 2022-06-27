@@ -148,7 +148,7 @@
                                                         <input type="text" class="form-control" name="jumlah_pembayaran" id="jumlah_pembayaran" value="{{ $detail_bayars->fee_pekerjaan }}">
                                                     </div>
                                                     <div class="mb-3">
-                                                        <label for="bukti_pembayaran" class="form-label">Unggah Bukti Pembayaran</label>
+                                                        <label for="bukti_pembayaran" class="form-label">Unggah Bukti Pembayaran</label><p>(Bukti Pembayaran dalam format : <i>jpeg,png,jpg,gif,svg</i> | Max file : 2MB )</p>
                                                         <input onbeforeeditfocus="return false;" type="file" name="bukti_pembayaran" id="uploadFile">
                                                     </div>
                                                 </div>
