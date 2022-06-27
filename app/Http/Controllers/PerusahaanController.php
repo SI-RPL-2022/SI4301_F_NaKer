@@ -100,13 +100,13 @@ class PerusahaanController extends Controller
         $buktiPembayaran = $request->bukti_pembayaran;
         if ($buktiPembayaran != "") {
             if ($pembayaran->puc != '' && $pembayaran->bukti_pembayaran != null) {
-                $path = public_path('gambar/buktiPembayaran/');
+                $path = public_path('dokumen/bukti_bayar');
                 $filePic = $path . $pembayaran->bukti_pembayaran;
                 unlink($filePic);
             }
             $buktiPembayaran = $buktiPembayaran->getClientOriginalName();
             $pembayaran->bukti_pembayaran = $buktiPembayaran;
-            $request->bukti_pembayaran->move(public_path('gambar/buktiPembayaran'), $buktiPembayaran);
+            $request->bukti_pembayaran->move(public_path('dokumen/bukti_bayar'), $buktiPembayaran);
             $save = $pembayaran->save();
         }
         $save = $pembayaran->save();
