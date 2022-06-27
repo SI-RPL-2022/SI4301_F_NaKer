@@ -15,8 +15,12 @@
                     <div class="card-body">
                         <h5 class="card-title"><strong>{{ $riwayats->nama_pekerjaan }}</strong></h5>
                         <p class="card-text">{{ $riwayats->deskripsi_pekerjaan }}</p>
-                        <a href="#" class="btn mt-4" style="color:white;font-size:14px;background-color: #588157; ">Selesai</a>
-                        <a href="{{ route('pemberi_kerja.detail_riwayat', ['id'=>$riwayats->id]) }}" class="btn mt-4" style="color:white;font-size:14px;background-color: #3A5A40; ">Detail Pembayaran</a>
+                        @if($riwayats->status_pembayaran == 'Belum Bayar')
+                            <a href="#" class="btn mt-4" style="color:white;font-size:14px;background-color: #A3B18A; ">In Progress</a>
+                        @elseif($riwayats->status_pembayaran == 'Sudah Bayar')
+                            <a href="#" class="btn mt-4" style="color:white;font-size:14px;background-color: #588157; ">Selesai</a>
+                        @endif
+                            <a href="{{ route('pemberi_kerja.detail_riwayat', ['id'=>$riwayats->id]) }}" class="btn mt-4" style="color:white;font-size:14px;background-color: #3A5A40; ">Detail Pembayaran</a>
                     </div>
                 </div>
             </div>   
