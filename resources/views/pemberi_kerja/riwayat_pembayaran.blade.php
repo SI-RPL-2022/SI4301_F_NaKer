@@ -82,7 +82,7 @@
                                         <p>Bukti Pembayaran : </p>
                                     </div>
                                     <div class="col">
-                                        <embed src="/gambar/buktiPembayaran/{{$detail_riwayats->bukti_pembayaran}}" style="width:100%;height:250px;" type="application/pdf">
+                                        <embed src="/dokumen/bukti_bayar/{{$detail_riwayats->bukti_pembayaran}}" style="width:100%;height:250px;" type="application/pdf">
                                         <label class="form-label"><i class="" style="color:#636363;">file ter-upload : {{$detail_riwayats->bukti_pembayaran}}</i> </label>
                                     </div>
                                 </div>
